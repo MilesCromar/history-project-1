@@ -4,7 +4,6 @@
     <title>Google Drive</title>
     <style>
         :root {
-            /* Smoother Color Palette */
             --color-common: #94a3b8; 
             --color-rare: #3b82f6;   
             --color-legendary: #fbbf24; 
@@ -18,60 +17,43 @@
             display: flex; 
             flex-direction: column; 
             align-items: center; 
+            min-height: 100vh;
         }
 
-       .vault-grid {
-    display: grid;
-    /* This creates 4 columns. If the screen is too small, it drops to 3. */
-    grid-template-columns: repeat(auto-fit, 220px); 
-    gap: 30px;
-    padding: 50px;
-    justify-content: center; /* This centers the whole group of cards */
-    width: 100%;
-    perspective: 1000px;
-}
-
-.game-card {
-    /* These lines FORCE the size to stay the same */
-    width: 220px;
-    height: 320px;
-    min-width: 220px; 
-    min-height: 320px;
-    
-    background: #1e293b;
-    border-radius: 12px;
-    position: relative;
-    text-decoration: none;
-    color: white;
-    transition: all 0.2s ease-out;
-    transform-style: preserve-3d;
-    border: 2px solid #334155;
-    overflow: hidden;
-    display: flex; /* Helps align the label at the bottom */
-    flex-direction: column;
-}
-
-/* This makes sure the art area always takes up space even if the image is missing */
-.card-art { 
-    width: 100%; 
-    height: 240px; 
-    background-color: #000; /* Black box if image fails */
-    background-size: cover; 
-    background-position: center;
-    flex-shrink: 0;
-}
+        .vault-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, 220px); 
+            gap: 30px;
+            padding: 50px;
+            justify-content: center;
+            width: 100%;
+            perspective: 1000px;
         }
 
-        /* 1. COMMON */
+        .game-card {
+            width: 220px;
+            height: 320px;
+            background: #1e293b;
+            border-radius: 12px;
+            position: relative;
+            text-decoration: none;
+            color: white;
+            transition: all 0.2s ease-out;
+            transform-style: preserve-3d;
+            border: 2px solid #334155;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* RARITY STYLES */
         .common { border-color: var(--color-common); }
         .common .rarity-text { color: var(--color-common); font-size: 11px; letter-spacing: 1px; }
 
-        /* 2. RARE */
         .rare { border-color: var(--color-rare); }
         .rare .rarity-text { color: var(--color-rare); font-weight: bold; }
         .rare:hover { box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
 
-        /* 3. LEGENDARY (Cleaner Gold Shine) */
         .legendary { border-color: var(--color-legendary); }
         .legendary .rarity-text { color: var(--color-legendary); font-weight: bold; text-shadow: 0 0 8px rgba(251, 191, 36, 0.5); }
         .legendary:hover { box-shadow: 0 0 25px rgba(251, 191, 36, 0.5); }
@@ -86,32 +68,41 @@
         }
         .legendary:hover::before { top: -50%; left: -50%; }
 
-        .card-art { width: 100%; height: 240px; background-size: cover; background-position: center; }
-        .card-label { padding: 12px; background: #0f172a; height: 80px; }
-        
-        /* For hidden cards */
-        .locked { display: none; }
-        #custom-toast {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: var(--color-legendary);
-    color: #000;
-    padding: 15px 25px;
-    border-radius: 8px;
-    font-weight: bold;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    transform: translateX(200%); /* Hidden by default */
-    transition: transform 0.5s ease-in-out;
-    z-index: 9999;
-}
+        .card-art { 
+            width: 100%; 
+            height: 240px; 
+            background-color: #000;
+            background-size: cover; 
+            background-position: center;
+            flex-shrink: 0;
+        }
 
-#custom-toast.show {
-    transform: translateX(0); /* Slide in */
-}
+        .card-label { padding: 12px; background: #0f172a; flex-grow: 1; }
+        
+        .locked { display: none; }
+
+        /* CUSTOM NOTIFICATION (TOAST) */
+        #custom-toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--color-legendary);
+            color: #000;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            transform: translateX(250%);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 9999;
+        }
+
+        #custom-toast.show { transform: translateX(0); }
     </style>
 </head>
 <body>
+
+    <div id="custom-toast">🔓 LEGENDARY CARD UNLOCKED!</div>
 
     <h1 style="margin-top:30px; font-weight: 300;">My Drive</h1>
 
@@ -164,15 +155,23 @@
             });
         });
 
-        // UNLOCK LOGIC
+        // UNLOCK LOGIC (No more browser alerts!)
         function checkCode() {
             const code = document.getElementById('vaultCode').value;
+            const toast = document.getElementById('custom-toast');
+            
             if (code === "12345") {
                 const secret = document.getElementById('secretGame');
                 secret.classList.remove('locked');
-                alert("🔓 LEGENDARY CARD UNLOCKED!");
+                
+                // Show Custom Notification
+                toast.classList.add('show');
+                setTimeout(() => { toast.classList.remove('show'); }, 3000);
+                
+                document.getElementById('vaultCode').value = "";
             } else {
-                alert("Invalid Access Code.");
+                // If it's wrong, we just clear the box
+                document.getElementById('vaultCode').value = "";
             }
         }
 
