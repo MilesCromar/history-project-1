@@ -1,83 +1,103 @@
-<style>
-    :root {
-        --steam-blue: #66c0f4;
-        --rarity-common: #b5b5b5;
-        --rarity-rare: #4b69ff;
-        --rarity-legendary: #ebdb34;
-    }
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Drive</title>
+    <style>
+        /* LINE 8: Setting up the colors and background */
+        :root {
+            --steam-blue: #66c0f4;
+            --rarity-rare: #4b69ff;
+        }
 
-    /* The Main Grid */
-    .vault-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 30px;
-        padding: 50px;
-        perspective: 1000px; /* Gives the 3D depth */
-    }
+        body { 
+            background: #1b2838; 
+            color: white; 
+            font-family: sans-serif; 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
 
-    /* The Card Container */
-    .game-card {
-        width: 200px;
-        height: 300px;
-        background: #1a1a1a;
-        border-radius: 8px;
-        position: relative;
-        text-decoration: none;
-        color: white;
-        transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
-        transform-style: preserve-3d;
-        border: 1px solid #333;
-        overflow: hidden;
-    }
+        /* LINE 20: The Card Math */
+        .vault-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 40px;
+            padding: 50px;
+            perspective: 1000px;
+        }
 
-    /* 3D Tilt & Glow on Hover */
-    .game-card:hover {
-        transform: rotateX(10deg) rotateY(-10deg) translateY(-10px);
-        box-shadow: 15px 15px 30px rgba(0,0,0,0.7), 0 0 20px var(--steam-blue);
-        border-color: var(--steam-blue);
-    }
+        .game-card {
+            width: 220px;
+            height: 320px;
+            background: #1a1a1a;
+            border-radius: 12px;
+            position: relative;
+            text-decoration: none;
+            color: white;
+            transition: transform 0.1s ease-out; /* Smooth flex */
+            transform-style: preserve-3d;
+            border: 1px solid #333;
+            overflow: hidden;
+            display: block;
+        }
 
-    /* The "Shiny" Glint Effect */
-    .game-card::after {
-        content: "";
-        position: absolute;
-        top: -100%;
-        left: -100%;
-        width: 300%;
-        height: 300%;
-        background: linear-gradient(135deg, rgba(255,255,255,0) 45%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 55%);
-        transition: all 0.5s;
-        pointer-events: none;
-    }
+        .card-art {
+            width: 100%;
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+        }
 
-    .game-card:hover::after {
-        top: -50%;
-        left: -50%;
-    }
+        .card-label {
+            padding: 10px;
+            background: rgba(0,0,0,0.8);
+            height: 70px;
+        }
+    </style>
+</head>
+<body>
 
-    .card-art {
-        width: 100%;
-        height: 80%;
-        background-size: cover;
-        background-position: center;
-        border-bottom: 2px solid #333;
-    }
+    <h1>Project Storage</h1>
 
-    .card-label {
-        padding: 10px;
-        font-family: 'Arial Black', sans-serif;
-        font-size: 14px;
-        background: rgba(0,0,0,0.8);
-        height: 20%;
-    }
-</style>
+    <div class="vault-grid">
+        <a href="drive-boss.html" class="game-card">
+            <div class="card-art" style="background-image: url('https://via.placeholder.com/220x250/111/fff?text=DRIVE+BOSS');"></div>
+            <div class="card-label">
+                <div style="font-size: 10px; color: var(--steam-blue);">RARE CARD</div>
+                <div style="font-weight: bold;">Drive Boss V1</div>
+            </div>
+        </a>
+    </div>
 
-<div class="vault-grid">
-    <a href="drive-boss.html" class="game-card">
-        <div class="card-art" style="background-image: url('https://via.placeholder.com/200x240/111/fff?text=DRIVE+BOSS');"></div>
-        <div class="card-label">
-            <div style="font-size: 10px; color: var(--rarity-rare);">RARE ITEM</div>
-            DRIVE BOSS V1
-        </div>
-    </a>
-</div>
+    <script>
+        const cards = document.querySelectorAll('.game-card');
+
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                // This math creates the "Press Down" flex effect
+                const rotateX = (centerY - y) / 10; 
+                const rotateY = (x - centerX) / 10;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+            });
+        });
+
+        // Panic Key
+        window.addEventListener('keydown', function(e) {
+            if (e.key === "Escape") { window.location.replace("https://classroom.google.com"); }
+        });
+    </script>
+</body>
+</html>
