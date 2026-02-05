@@ -1,75 +1,83 @@
 <style>
     :root {
         --steam-blue: #66c0f4;
-        --rare-gold: #ebdb34;
+        --rarity-common: #b5b5b5;
+        --rarity-rare: #4b69ff;
+        --rarity-legendary: #ebdb34;
     }
 
-    body { 
-        background: #1b2838; /* Classic Steam dark blue/grey */
-        perspective: 1000px; /* Essential for the 3D effect */
+    /* The Main Grid */
+    .vault-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 30px;
+        padding: 50px;
+        perspective: 1000px; /* Gives the 3D depth */
     }
 
-    .grid { 
-        display: grid; 
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
-        gap: 40px; 
-        padding: 50px; 
-    }
-
-    .steam-card {
-        width: 220px;
-        background: #2a2a2a;
-        border-radius: 4px;
-        padding: 12px;
+    /* The Card Container */
+    .game-card {
+        width: 200px;
+        height: 300px;
+        background: #1a1a1a;
+        border-radius: 8px;
+        position: relative;
         text-decoration: none;
         color: white;
-        border: 1px solid #444;
-        position: relative;
-        transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
-        transform-style: preserve-3d; /* Makes the 3D look "deep" */
+        transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+        transform-style: preserve-3d;
+        border: 1px solid #333;
+        overflow: hidden;
     }
 
-    /* The 3D Hover Effect */
-    .steam-card:hover {
-        /* This creates the tilt. Adjust the deg to tilt more or less */
-        transform: rotateX(10deg) rotateY(-10deg) scale(1.05);
+    /* 3D Tilt & Glow on Hover */
+    .game-card:hover {
+        transform: rotateX(10deg) rotateY(-10deg) translateY(-10px);
+        box-shadow: 15px 15px 30px rgba(0,0,0,0.7), 0 0 20px var(--steam-blue);
         border-color: var(--steam-blue);
-        box-shadow: 20px 20px 50px rgba(0,0,0,0.5), 0 0 15px var(--steam-blue);
     }
 
-    .card-image {
+    /* The "Shiny" Glint Effect */
+    .game-card::after {
+        content: "";
+        position: absolute;
+        top: -100%;
+        left: -100%;
+        width: 300%;
+        height: 300%;
+        background: linear-gradient(135deg, rgba(255,255,255,0) 45%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 55%);
+        transition: all 0.5s;
+        pointer-events: none;
+    }
+
+    .game-card:hover::after {
+        top: -50%;
+        left: -50%;
+    }
+
+    .card-art {
         width: 100%;
-        height: 300px;
-        background: #111;
+        height: 80%;
         background-size: cover;
-        border: 1px solid #000;
-        /* This makes the image look like it's slightly lifted off the card */
-        transform: translateZ(20px); 
+        background-position: center;
+        border-bottom: 2px solid #333;
     }
 
-    .card-info {
-        margin-top: 12px;
+    .card-label {
         padding: 10px;
-        background: rgba(0,0,0,0.4);
-        border-left: 4px solid var(--steam-blue);
-        transform: translateZ(10px);
-    }
-
-    .rarity {
-        font-size: 10px;
-        text-transform: uppercase;
-        color: var(--steam-blue);
-        letter-spacing: 2px;
-        margin-bottom: 4px;
+        font-family: 'Arial Black', sans-serif;
+        font-size: 14px;
+        background: rgba(0,0,0,0.8);
+        height: 20%;
     }
 </style>
 
-<div class="grid">
-    <a href="drive-boss.html" class="steam-card">
-        <div class="card-image" style="background-image: url('YOUR_GAME_IMAGE_LINK');"></div>
-        <div class="card-info">
-            <div class="rarity">Rare Card</div>
-            <div style="font-weight: bold; font-size: 15px;">Drive Boss</div>
+<div class="vault-grid">
+    <a href="drive-boss.html" class="game-card">
+        <div class="card-art" style="background-image: url('https://via.placeholder.com/200x240/111/fff?text=DRIVE+BOSS');"></div>
+        <div class="card-label">
+            <div style="font-size: 10px; color: var(--rarity-rare);">RARE ITEM</div>
+            DRIVE BOSS V1
         </div>
     </a>
 </div>
