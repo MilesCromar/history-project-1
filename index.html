@@ -20,30 +20,46 @@
             align-items: center; 
         }
 
-        .vault-grid {
+       .vault-grid {
     display: grid;
-    /* This forces exactly 4 columns. Change the 4 to a 3 if you want them bigger! */
-    grid-template-columns: repeat(4, 1fr); 
+    /* This creates 4 columns. If the screen is too small, it drops to 3. */
+    grid-template-columns: repeat(auto-fit, 220px); 
     gap: 30px;
     padding: 50px;
-    width: 90%; /* Helps center the whole grid */
+    justify-content: center; /* This centers the whole group of cards */
+    width: 100%;
     perspective: 1000px;
 }
-        }
 
-        .game-card {
-            width: 220px;
-            height: 320px;
-            background: #1e293b;
-            border-radius: 12px;
-            position: relative;
-            text-decoration: none;
-            color: white;
-            transition: all 0.2s ease-out;
-            transform-style: preserve-3d;
-            border: 2px solid #334155;
-            overflow: hidden;
-            display: block;
+.game-card {
+    /* These lines FORCE the size to stay the same */
+    width: 220px;
+    height: 320px;
+    min-width: 220px; 
+    min-height: 320px;
+    
+    background: #1e293b;
+    border-radius: 12px;
+    position: relative;
+    text-decoration: none;
+    color: white;
+    transition: all 0.2s ease-out;
+    transform-style: preserve-3d;
+    border: 2px solid #334155;
+    overflow: hidden;
+    display: flex; /* Helps align the label at the bottom */
+    flex-direction: column;
+}
+
+/* This makes sure the art area always takes up space even if the image is missing */
+.card-art { 
+    width: 100%; 
+    height: 240px; 
+    background-color: #000; /* Black box if image fails */
+    background-size: cover; 
+    background-position: center;
+    flex-shrink: 0;
+}
         }
 
         /* 1. COMMON */
