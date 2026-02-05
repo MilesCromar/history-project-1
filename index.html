@@ -80,7 +80,7 @@
             position: fixed; top: 20px; right: 20px;
             padding: 12px 20px; border-radius: 4px;
             font-size: 12px; letter-spacing: 1px; font-weight: bold;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.8);
             transform: translateX(250%);
             transition: transform 0.4s ease-in-out;
             z-index: 9999;
@@ -97,99 +97,38 @@
 
     <div class="vault-grid">
         <a href="#" class="game-card common">
-            <div class="card-art" style="background-image: url('https://via.placeholder.com/220x240/1e293b/475569?text=DOC-01');"></div>
+            <div class="card-art" style="background-image: url('https://via.placeholder.com/220x240/1e293b/475569?text=PUBLIC');"></div>
             <div class="card-label">
                 <div class="rarity-text">STANDARD</div>
-                <div style="font-weight: 500; margin-top: 4px;">Public File</div>
+                <div style="font-weight: 500; margin-top: 4px;">Public File 01</div>
             </div>
         </a>
 
-        <a href="#" id="commonUnlock" class="game-card common locked">
-            <div class="card-art" style="background-image: url('https://via.placeholder.com/220x240/1e293b/475569?text=DOC-02');"></div>
+        <a href="#" id="standardUnlock" class="game-card common locked">
+            <div class="card-art" style="background-image: url('https://via.placeholder.com/220x240/1e293b/475569?text=STANDARD');"></div>
             <div class="card-label">
                 <div class="rarity-text">STANDARD</div>
-                <div style="font-weight: 500; margin-top: 4px;">Standard Asset</div>
+                <div style="font-weight: 500; margin-top: 4px;">Level 1 Asset</div>
             </div>
         </a>
 
-        <a href="#" id="rareUnlock" class="game-card rare locked">
-            <div class="card-art" style="background-image: url('https://via.placeholder.com/220x240/1e293b/3b82f6?text=DOC-03');"></div>
+        <a href="#" id="restrictedUnlock" class="game-card rare locked">
+            <div class="card-art" style="background-image: url('https://via.placeholder.com/220x240/1e293b/3b82f6?text=RESTRICTED');"></div>
             <div class="card-label">
                 <div class="rarity-text">RESTRICTED</div>
-                <div style="font-weight: 500; margin-top: 4px;">Restricted Data</div>
+                <div style="font-weight: 500; margin-top: 4px;">Level 2 Asset</div>
             </div>
         </a>
 
-        <a href="#" id="secretGame" class="game-card legendary locked">
-            <div class="card-art" style="background-image: url('https://via.placeholder.com/220x240/1e293b/fbbf24?text=DOC-04');"></div>
+        <a href="#" id="classifiedUnlock" class="game-card legendary locked">
+            <div class="card-art" style="background-image: url('https://via.placeholder.com/220x240/1e293b/fbbf24?text=CLASSIFIED');"></div>
             <div class="card-label">
                 <div class="rarity-text">CLASSIFIED</div>
-                <div style="font-weight: 500; margin-top: 4px;">Classified Asset</div>
+                <div style="font-weight: 500; margin-top: 4px;">Level 3 Asset</div>
             </div>
         </a>
     </div>
 
     <div style="margin-top: 50px; padding: 20px; border-top: 1px solid #1e293b; width: 80%; text-align: center;">
-        <input type="text" id="vaultCode" placeholder="Enter Access Code..." 
-            style="background: #0f172a; border: 1px solid #334155; color: white; padding: 10px 20px; border-radius: 4px; width: 300px; outline: none; font-family: monospace;">
-        <button onclick="checkCode()" style="background: transparent; border: 1px solid var(--color-rare); color: var(--color-rare); padding: 9px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-left: 10px;">Verify</button>
-    </div>
-
-    <script>
-        const cards = document.querySelectorAll('.game-card');
-        cards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const rotateX = ( (rect.height / 2) - (e.clientY - rect.top)) / 15; 
-                const rotateY = ((e.clientX - rect.left) - (rect.width / 2)) / 15;
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-            });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-            });
-        });
-
-        function checkCode() {
-            const code = document.getElementById('vaultCode').value;
-            const toast = document.getElementById('custom-toast');
-            
-            let message = "";
-            let bgColor = "";
-            let textColor = "#ffffff";
-            let targetCard = null;
-
-            if (code === "common99") {
-                targetCard = document.getElementById('commonUnlock');
-                message = "Access Granted: Standard Asset Unlocked";
-                bgColor = "#94a3b8";
-                textColor = "#000000";
-            } else if (code === "rare77") {
-                targetCard = document.getElementById('rareUnlock');
-                message = "Access Granted: Restricted Asset Unlocked";
-                bgColor = "#3b82f6";
-            } else if (code === "12345") {
-                targetCard = document.getElementById('secretGame');
-                message = "Access Granted: Classified Asset Unlocked";
-                bgColor = "#fbbf24";
-                textColor = "#000000";
-            }
-
-            if (targetCard) {
-                targetCard.classList.remove('locked');
-                toast.innerText = message;
-                toast.style.background = bgColor;
-                toast.style.color = textColor;
-                toast.style.borderColor = bgColor;
-                toast.classList.add('show');
-                setTimeout(() => { toast.classList.remove('show'); }, 4000);
-            }
-            
-            document.getElementById('vaultCode').value = "";
-        }
-
-        window.addEventListener('keydown', (e) => {
-            if (e.key === "Escape") { window.location.replace("https://classroom.google.com"); }
-        });
-    </script>
-</body>
-</html>
+        <input type="text" id="vaultCode" placeholder="Enter Numeric Key..." 
+            style="background: #0f172a; border: 1px solid #334155; color: white; padding: 10px 20px; border-radius: 4px; width: 300px; outline: none; font-family: monospace; text-align: center;">
