@@ -1,86 +1,75 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Google Drive</title>
-    <style>
-        :root {
-            --bg: #0f172a;
-            --card-bg: rgba(30, 41, 59, 0.7);
-            --accent: #38bdf8;
-        }
+<style>
+    :root {
+        --steam-blue: #66c0f4;
+        --rare-gold: #ebdb34;
+    }
 
-        body { 
-            background-color: var(--bg); 
-            color: white; 
-            font-family: 'Inter', -apple-system, sans-serif; 
-            margin: 0; 
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+    body { 
+        background: #1b2838; /* Classic Steam dark blue/grey */
+        perspective: 1000px; /* Essential for the 3D effect */
+    }
 
-        h1 { font-weight: 600; letter-spacing: -1px; color: var(--accent); }
+    .grid { 
+        display: grid; 
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
+        gap: 40px; 
+        padding: 50px; 
+    }
 
-        .grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); 
-            gap: 25px; 
-            width: 100%;
-            max-width: 1000px;
-            margin-top: 40px;
-        }
+    .steam-card {
+        width: 220px;
+        background: #2a2a2a;
+        border-radius: 4px;
+        padding: 12px;
+        text-decoration: none;
+        color: white;
+        border: 1px solid #444;
+        position: relative;
+        transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
+        transform-style: preserve-3d; /* Makes the 3D look "deep" */
+    }
 
-        .card { 
-            background: var(--card-bg); 
-            backdrop-filter: blur(10px); /* This makes it look like frosted glass */
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            border-radius: 16px; 
-            padding: 20px; 
-            text-align: center; 
-            text-decoration: none; 
-            color: white; 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* The "Smooth" secret */
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
+    /* The 3D Hover Effect */
+    .steam-card:hover {
+        /* This creates the tilt. Adjust the deg to tilt more or less */
+        transform: rotateX(10deg) rotateY(-10deg) scale(1.05);
+        border-color: var(--steam-blue);
+        box-shadow: 20px 20px 50px rgba(0,0,0,0.5), 0 0 15px var(--steam-blue);
+    }
 
-        .card:hover { 
-            transform: translateY(-8px) scale(1.02); 
-            border-color: var(--accent);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
-            background: rgba(30, 41, 59, 0.9);
-        }
+    .card-image {
+        width: 100%;
+        height: 300px;
+        background: #111;
+        background-size: cover;
+        border: 1px solid #000;
+        /* This makes the image look like it's slightly lifted off the card */
+        transform: translateZ(20px); 
+    }
 
-        .icon-box {
-            background: #1e293b;
-            height: 120px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
-        }
+    .card-info {
+        margin-top: 12px;
+        padding: 10px;
+        background: rgba(0,0,0,0.4);
+        border-left: 4px solid var(--steam-blue);
+        transform: translateZ(10px);
+    }
 
-        .card-title { font-weight: 500; font-size: 1.1rem; }
-    </style>
-</head>
-<body>
+    .rarity {
+        font-size: 10px;
+        text-transform: uppercase;
+        color: var(--steam-blue);
+        letter-spacing: 2px;
+        margin-bottom: 4px;
+    }
+</style>
 
-    <h1>Project Storage</h1>
-
-    <div class="grid">
-        <a href="drive-boss.html" class="card">
-            <div class="icon-box">🚗</div>
-            <div class="card-title">DriveBoss_V4.exe</div>
-        </a>
-
+<div class="grid">
+    <a href="drive-boss.html" class="steam-card">
+        <div class="card-image" style="background-image: url('YOUR_GAME_IMAGE_LINK');"></div>
+        <div class="card-info">
+            <div class="rarity">Rare Card</div>
+            <div style="font-weight: bold; font-size: 15px;">Drive Boss</div>
         </div>
-
-    <script>
-        window.addEventListener('keydown', function(e) {
-            if (e.key === "Escape") { window.location.replace("https://classroom.google.com"); }
-        });
-    </script>
-</body>
-</html>
+    </a>
+</div>
