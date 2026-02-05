@@ -3,60 +3,84 @@
 <head>
     <title>Google Drive</title>
     <style>
-        body { background-color: #121212; color: white; font-family: sans-serif; text-align: center; margin: 0; overflow: hidden; }
-        .game-container { width: 100vw; height: 100vh; }
+        :root {
+            --bg: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --accent: #38bdf8;
+        }
+
+        body { 
+            background-color: var(--bg); 
+            color: white; 
+            font-family: 'Inter', -apple-system, sans-serif; 
+            margin: 0; 
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 { font-weight: 600; letter-spacing: -1px; color: var(--accent); }
+
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); 
+            gap: 25px; 
+            width: 100%;
+            max-width: 1000px;
+            margin-top: 40px;
+        }
+
+        .card { 
+            background: var(--card-bg); 
+            backdrop-filter: blur(10px); /* This makes it look like frosted glass */
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 16px; 
+            padding: 20px; 
+            text-align: center; 
+            text-decoration: none; 
+            color: white; 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* The "Smooth" secret */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .card:hover { 
+            transform: translateY(-8px) scale(1.02); 
+            border-color: var(--accent);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+            background: rgba(30, 41, 59, 0.9);
+        }
+
+        .icon-box {
+            background: #1e293b;
+            height: 120px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+
+        .card-title { font-weight: 500; font-size: 1.1rem; }
     </style>
 </head>
 <body>
 
-    <div class="game-container">
+    <h1>Project Storage</h1>
+
+    <div class="grid">
+        <a href="drive-boss.html" class="card">
+            <div class="icon-box">🚗</div>
+            <div class="card-title">DriveBoss_V4.exe</div>
+        </a>
+
         </div>
-<!DOCTYPE html> <html> <head> <title>Drift Boss</title> <link rel="icon" type="image/x-icon" href="/media/graphics/misc/favicon.ico"> <meta http-equiv="Content-type" content="text/html; charset=utf-8"> <meta name="robots" content="noindex, nofollow"> <meta name="viewport" content="width=device-width,height=device-height, initial-scale=1, maximum-scale=1, user-scalable=0, minimal-ui" /> <meta name="apple-mobile-web-app-capable" content="yes"> <script async src="https://www.googletagmanager.com/gtag/js?id=G-MENBM6GSNY"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-MENBM6GSNY")</script> <link rel="stylesheet" type="text/css" href="https://738501629-461082748261058427.preview.editmysite.com/uploads/b/139890129-817510652323129407/files/game.css"> <script type="text/javascript" src="https://738501629-461082748261058427.preview.editmysite.com/uploads/b/139890129-817510652323129407/files/game.js"></script> </head> <body onload="setTimeout(function(){window.scrollTo(0,1)},1);"> <div id="ajaxbar"> <div id="game"><canvas id="canvas"></canvas></div> <div id="webgl"><canvas id="webglcanvas"></canvas></div> <div id="orientate"><img src="https://738501629-461082748261058427.preview.editmysite.com/uploads/b/139890129-817510652323129407/files/media/graphics/orientate/landscape.jpg"></div> <div id="play" class="play" onclick=""><img src="https://738501629-461082748261058427.preview.editmysite.com/uploads/b/139890129-817510652323129407/files/media/graphics/splash/mobile/cover-start.jpg"></div> </div> <script src="https://cdn.jsdelivr.net/gh/st39/sdk@main/api.js"></script> </body> </html>
-<script>
-(function () {
-	const btn = document.createElement("button");
-	btn.innerText = "fullscreen";
-
-	btn.style.position = "fixed";
-	btn.style.bottom = "12px";
-	btn.style.right = "12px";
-	btn.style.zIndex = "9999";
-	btn.style.background = "#f2f2f2";
-	btn.style.color = "#1a73e8";
-	btn.style.border = "1px solid #bdbdbd";
-	btn.style.padding = "6px 10px";
-	btn.style.fontFamily = "Arial, sans-serif";
-	btn.style.fontSize = "13px";
-	btn.style.cursor = "pointer";
-
-	document.body.appendChild(btn);
-
-	btn.onclick = function () {
-		const el =
-			document.getElementById("gameContainer") ||
-			document.querySelector("iframe") ||
-			document.querySelector("canvas") ||
-			document.body;
-
-		if (el.requestFullscreen) {
-			el.requestFullscreen();
-		} else if (el.webkitRequestFullscreen) {
-			el.webkitRequestFullscreen();
-		} else if (el.msRequestFullscreen) {
-			el.msRequestFullscreen();
-		}
-	};
-})();
-</script>
 
     <script>
         window.addEventListener('keydown', function(e) {
-            if (e.key === "Escape") {
-                window.location.replace("https://classroom.google.com");
-            }
+            if (e.key === "Escape") { window.location.replace("https://classroom.google.com"); }
         });
-        window.onblur = function() { document.title = "My Drive - Google Drive"; };
-        window.onfocus = function() { document.title = "Project Vault"; };
     </script>
 </body>
 </html>
