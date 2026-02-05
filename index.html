@@ -132,3 +132,65 @@
     <div style="margin-top: 50px; padding: 20px; border-top: 1px solid #1e293b; width: 80%; text-align: center;">
         <input type="text" id="vaultCode" placeholder="Enter Numeric Key..." 
             style="background: #0f172a; border: 1px solid #334155; color: white; padding: 10px 20px; border-radius: 4px; width: 300px; outline: none; font-family: monospace; text-align: center;">
+        <button onclick="checkCode()" style="background: transparent; border: 1px solid var(--color-rare); color: var(--color-rare); padding: 9px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-left: 10px;">Verify</button>
+    </div>
+
+    <script>
+        const cards = document.querySelectorAll('.game-card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const rotateX = ( (rect.height / 2) - (e.clientY - rect.top)) / 20; 
+                const rotateY = ((e.clientX - rect.left) - (rect.width / 2)) / 20;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+            });
+        });
+
+        function checkCode() {
+            const code = document.getElementById('vaultCode').value;
+            const toast = document.getElementById('custom-toast');
+            
+            let message = "";
+            let bgColor = "";
+            let textColor = "#ffffff";
+            let targetCard = null;
+
+            // Numeric Code Mapping
+            if (code === "11111") {
+                targetCard = document.getElementById('standardUnlock');
+                message = "Access Granted: Standard Asset Unlocked";
+                bgColor = "#64748b"; // Solid Slate
+            } else if (code === "22222") {
+                targetCard = document.getElementById('restrictedUnlock');
+                message = "Access Granted: Restricted Asset Unlocked";
+                bgColor = "#3b82f6"; // Blue
+            } else if (code === "33333") {
+                targetCard = document.getElementById('classifiedUnlock');
+                message = "Access Granted: Classified Asset Unlocked";
+                bgColor = "#fbbf24"; // Gold
+                textColor = "#000000";
+            }
+
+            if (targetCard) {
+                targetCard.classList.remove('locked');
+                toast.innerText = message;
+                toast.style.background = bgColor;
+                toast.style.color = textColor;
+                toast.style.borderColor = bgColor;
+                toast.classList.add('show');
+                setTimeout(() => { toast.classList.remove('show'); }, 4000);
+            }
+            
+            document.getElementById('vaultCode').value = "";
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === "Escape") { window.location.replace("https://classroom.google.com"); }
+            if (e.key === "Enter") { checkCode(); } // Allow pressing Enter to verify
+        });
+    </script>
+</body>
+</html>
