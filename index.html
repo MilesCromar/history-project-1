@@ -121,6 +121,17 @@
         window.addEventListener('keydown', function(e) {
             if (e.key === "Escape") { window.location.replace("https://classroom.google.com"); }
         });
+        function checkCode() {
+    const code = document.getElementById('vaultCode').value;
+    
+    // Example: If they type 12345, it unlocks a specific game
+    if (code === "12345") {
+        alert("LEGENDARY CARD UNLOCKED!");
+        // We will add the logic to make the card appear here next
+    } else {
+        alert("Invalid Access Code.");
+    }
+}
     </script>
     <div style="margin-top: 50px; padding: 20px; border-top: 1px solid #333; width: 80%; text-align: center;">
     <input type="text" id="vaultCode" placeholder="Search Drive..." 
