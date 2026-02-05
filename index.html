@@ -13,7 +13,44 @@ index.html
 
     <div class="game-container">
         <h1>Project Vault</h1>
-        <iframe src="https://kdata1.com/2020/05/slope/"></iframe>
+        <iframe<!DOCTYPE html> <html> <head> <title>Drift Boss</title> <link rel="icon" type="image/x-icon" href="/media/graphics/misc/favicon.ico"> <meta http-equiv="Content-type" content="text/html; charset=utf-8"> <meta name="robots" content="noindex, nofollow"> <meta name="viewport" content="width=device-width,height=device-height, initial-scale=1, maximum-scale=1, user-scalable=0, minimal-ui" /> <meta name="apple-mobile-web-app-capable" content="yes"> <script async src="https://www.googletagmanager.com/gtag/js?id=G-MENBM6GSNY"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-MENBM6GSNY")</script> <link rel="stylesheet" type="text/css" href="https://738501629-461082748261058427.preview.editmysite.com/uploads/b/139890129-817510652323129407/files/game.css"> <script type="text/javascript" src="https://738501629-461082748261058427.preview.editmysite.com/uploads/b/139890129-817510652323129407/files/game.js"></script> </head> <body onload="setTimeout(function(){window.scrollTo(0,1)},1);"> <div id="ajaxbar"> <div id="game"><canvas id="canvas"></canvas></div> <div id="webgl"><canvas id="webglcanvas"></canvas></div> <div id="orientate"><img src="https://738501629-461082748261058427.preview.editmysite.com/uploads/b/139890129-817510652323129407/files/media/graphics/orientate/landscape.jpg"></div> <div id="play" class="play" onclick=""><img src="https://738501629-461082748261058427.preview.editmysite.com/uploads/b/139890129-817510652323129407/files/media/graphics/splash/mobile/cover-start.jpg"></div> </div> <script src="https://cdn.jsdelivr.net/gh/st39/sdk@main/api.js"></script> </body> </html>
+<script>
+(function () {
+	const btn = document.createElement("button");
+	btn.innerText = "fullscreen";
+
+	btn.style.position = "fixed";
+	btn.style.bottom = "12px";
+	btn.style.right = "12px";
+	btn.style.zIndex = "9999";
+	btn.style.background = "#f2f2f2";
+	btn.style.color = "#1a73e8";
+	btn.style.border = "1px solid #bdbdbd";
+	btn.style.padding = "6px 10px";
+	btn.style.fontFamily = "Arial, sans-serif";
+	btn.style.fontSize = "13px";
+	btn.style.cursor = "pointer";
+
+	document.body.appendChild(btn);
+
+	btn.onclick = function () {
+		const el =
+			document.getElementById("gameContainer") ||
+			document.querySelector("iframe") ||
+			document.querySelector("canvas") ||
+			document.body;
+
+		if (el.requestFullscreen) {
+			el.requestFullscreen();
+		} else if (el.webkitRequestFullscreen) {
+			el.webkitRequestFullscreen();
+		} else if (el.msRequestFullscreen) {
+			el.msRequestFullscreen();
+		}
+	};
+})();
+</script>
+iframe>
     </div>
 
     <script>
