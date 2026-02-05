@@ -1,0 +1,32 @@
+index.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Drive</title> <style>
+        body { background-color: #121212; color: white; font-family: sans-serif; text-align: center; margin: 0; }
+        .game-container { margin-top: 50px; }
+        iframe { width: 80%; height: 600px; border: 5px solid #333; border-radius: 10px; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <h1>Project Vault</h1>
+        <iframe src="https://example.com/your-game-link"></iframe>
+    </div>
+
+    <script>
+        // 1. The Panic Key: Press 'Escape' to go to Google Classroom
+        window.addEventListener('keydown', function(e) {
+            if (e.key === "Escape") {
+                window.location.replace("https://classroom.google.com");
+            }
+        });
+
+        // 2. Tab Cloaking: Changes title when you switch tabs
+        window.onblur = function() { document.title = "My Drive - Google Drive"; };
+        window.onfocus = function() { document.title = "Project Vault"; };
+    </script>
+</body>
+</html>
