@@ -34,35 +34,36 @@
             width: 220px;
             height: 320px;
             background: #1e293b;
-            border-radius: 12px;
+            border-radius: 8px; /* Slightly sharper corners for a formal look */
             position: relative;
             text-decoration: none;
             color: white;
             transition: all 0.2s ease-out;
             transform-style: preserve-3d;
-            border: 2px solid #334155;
+            border: 1px solid #334155;
             overflow: hidden;
             display: flex;
             flex-direction: column;
         }
 
-        /* RARITY STYLES */
+        /* PROFESSIONAL TIER STYLES */
         .common { border-color: var(--color-common); }
-        .common .rarity-text { color: var(--color-common); font-size: 11px; letter-spacing: 1px; }
+        .common .rarity-text { color: var(--color-common); font-size: 10px; letter-spacing: 2px; }
 
         .rare { border-color: var(--color-rare); }
-        .rare .rarity-text { color: var(--color-rare); font-weight: bold; }
-        .rare:hover { box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
+        .rare .rarity-text { color: var(--color-rare); font-size: 10px; letter-spacing: 2px; font-weight: bold; }
+        .rare:hover { box-shadow: 0 0 15px rgba(59, 130, 246, 0.2); }
 
         .legendary { border-color: var(--color-legendary); }
-        .legendary .rarity-text { color: var(--color-legendary); font-weight: bold; text-shadow: 0 0 8px rgba(251, 191, 36, 0.5); }
-        .legendary:hover { box-shadow: 0 0 25px rgba(251, 191, 36, 0.5); }
+        .legendary .rarity-text { color: var(--color-legendary); font-size: 10px; letter-spacing: 2px; font-weight: bold; }
+        .legendary:hover { box-shadow: 0 0 20px rgba(251, 191, 36, 0.3); }
 
+        /* Subtle Light Sweep for Classified cards */
         .legendary::before {
             content: "";
             position: absolute;
             top: -100%; left: -100%; width: 300%; height: 300%;
-            background: linear-gradient(120deg, transparent 45%, rgba(255,255,255,0.3) 50%, transparent 55%);
+            background: linear-gradient(120deg, transparent 45%, rgba(255,255,255,0.15) 50%, transparent 55%);
             transition: all 0.7s;
             pointer-events: none;
         }
@@ -75,25 +76,29 @@
             background-size: cover; 
             background-position: center;
             flex-shrink: 0;
+            border-bottom: 1px solid #334155;
         }
 
-        .card-label { padding: 12px; background: #0f172a; flex-grow: 1; }
+        .card-label { padding: 12px; background: #111827; flex-grow: 1; }
         
         .locked { display: none; }
 
-        /* CUSTOM NOTIFICATION (TOAST) */
+        /* SYSTEM NOTIFICATION */
         #custom-toast {
             position: fixed;
             top: 20px;
             right: 20px;
-            background: var(--color-legendary);
-            color: #000;
-            padding: 15px 25px;
-            border-radius: 8px;
+            background: #1e293b;
+            color: var(--color-legendary);
+            border: 1px solid var(--color-legendary);
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-size: 12px;
+            letter-spacing: 1px;
             font-weight: bold;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
             transform: translateX(250%);
-            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.4s ease-in-out;
             z-index: 9999;
         }
 
@@ -102,60 +107,58 @@
 </head>
 <body>
 
-    <div id="custom-toast">🔓 LEGENDARY CARD UNLOCKED!</div>
+    <div id="custom-toast">SYSTEM: CLASSIFIED ASSET DEPLOYED</div>
 
-    <h1 style="margin-top:30px; font-weight: 300;">My Drive</h1>
+    <h1 style="margin-top:30px; font-weight: 300; letter-spacing: 1px;">Archive Directory</h1>
 
     <div class="vault-grid">
         <a href="#" class="game-card common">
-            <div class="card-art" style="background-image: url('https://via.placeholder.com/220x240/1e293b/475569?text=COMMON');"></div>
+            <div class="card-art" style="background-image: url('https://via.placeholder.com/220x240/1e293b/475569?text=DOC-01');"></div>
             <div class="card-label">
-                <div class="rarity-text">COMMON</div>
-                <div style="font-weight: bold;">Standard Project</div>
+                <div class="rarity-text">STANDARD</div>
+                <div style="font-weight: 500; margin-top: 4px;">Standard Project</div>
             </div>
         </a>
 
         <a href="#" class="game-card rare">
-            <div class="card-art" style="background-image: url('https://via.placeholder.com/220x240/1e293b/3b82f6?text=RARE');"></div>
+            <div class="card-art" style="background-image: url('https://via.placeholder.com/220x240/1e293b/3b82f6?text=DOC-02');"></div>
             <div class="card-label">
-                <div class="rarity-text">RARE</div>
-                <div style="font-weight: bold;">Drive Boss V1</div>
+                <div class="rarity-text">RESTRICTED</div>
+                <div style="font-weight: 500; margin-top: 4px;">Drive Boss V1</div>
             </div>
         </a>
 
         <a href="#" id="secretGame" class="game-card legendary locked">
-            <div class="card-art" style="background-image: url('https://via.placeholder.com/220x240/1e293b/fbbf24?text=LEGENDARY');"></div>
+            <div class="card-art" style="background-image: url('https://via.placeholder.com/220x240/1e293b/fbbf24?text=DOC-03');"></div>
             <div class="card-label">
-                <div class="rarity-text">LEGENDARY</div>
-                <div style="font-weight: bold;">Top Secret Asset</div>
+                <div class="rarity-text">CLASSIFIED</div>
+                <div style="font-weight: 500; margin-top: 4px;">Top Secret Asset</div>
             </div>
         </a>
     </div>
 
-    <div style="margin-top: 50px; padding: 20px; border-top: 1px solid #333; width: 80%; text-align: center;">
-        <input type="text" id="vaultCode" placeholder="Search Drive..." 
-            style="background: #2a2a2a; border: 1px solid #444; color: white; padding: 10px 20px; border-radius: 20px; width: 300px; outline: none;">
-        <button onclick="checkCode()" style="background: #3b82f6; border: none; color: white; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-left: 10px;">Unlock</button>
+    <div style="margin-top: 50px; padding: 20px; border-top: 1px solid #1e293b; width: 80%; text-align: center;">
+        <input type="text" id="vaultCode" placeholder="Enter Access Code..." 
+            style="background: #0f172a; border: 1px solid #334155; color: white; padding: 10px 20px; border-radius: 4px; width: 300px; outline: none; font-family: monospace;">
+        <button onclick="checkCode()" style="background: transparent; border: 1px solid var(--color-rare); color: var(--color-rare); padding: 9px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-left: 10px; transition: 0.3s;">Verify</button>
     </div>
 
     <script>
-        // THE 3D FLEX ENGINE
         const cards = document.querySelectorAll('.game-card');
         cards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
-                const rotateX = ( (rect.height / 2) - y) / 10; 
-                const rotateY = (x - (rect.width / 2)) / 10;
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+                const rotateX = ( (rect.height / 2) - y) / 15; 
+                const rotateY = (x - (rect.width / 2)) / 15;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
             });
             card.addEventListener('mouseleave', () => {
                 card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
             });
         });
 
-        // UNLOCK LOGIC (No more browser alerts!)
         function checkCode() {
             const code = document.getElementById('vaultCode').value;
             const toast = document.getElementById('custom-toast');
@@ -163,19 +166,14 @@
             if (code === "12345") {
                 const secret = document.getElementById('secretGame');
                 secret.classList.remove('locked');
-                
-                // Show Custom Notification
                 toast.classList.add('show');
-                setTimeout(() => { toast.classList.remove('show'); }, 3000);
-                
+                setTimeout(() => { toast.classList.remove('show'); }, 4000);
                 document.getElementById('vaultCode').value = "";
             } else {
-                // If it's wrong, we just clear the box
                 document.getElementById('vaultCode').value = "";
             }
         }
 
-        // PANIC KEY
         window.addEventListener('keydown', function(e) {
             if (e.key === "Escape") { window.location.replace("https://classroom.google.com"); }
         });
