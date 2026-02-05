@@ -91,6 +91,24 @@
         
         /* For hidden cards */
         .locked { display: none; }
+        #custom-toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--color-legendary);
+    color: #000;
+    padding: 15px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    transform: translateX(200%); /* Hidden by default */
+    transition: transform 0.5s ease-in-out;
+    z-index: 9999;
+}
+
+#custom-toast.show {
+    transform: translateX(0); /* Slide in */
+}
     </style>
 </head>
 <body>
