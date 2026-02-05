@@ -22,6 +22,7 @@
 
         .vault-grid {
             display: grid;
+            /* Keeps cards at exactly 220px in clean rows */
             grid-template-columns: repeat(auto-fit, 220px); 
             gap: 30px;
             padding: 50px;
@@ -34,7 +35,7 @@
             width: 220px;
             height: 320px;
             background: #1e293b;
-            border-radius: 8px; /* Slightly sharper corners for a formal look */
+            border-radius: 8px;
             position: relative;
             text-decoration: none;
             color: white;
@@ -83,14 +84,11 @@
         
         .locked { display: none; }
 
-        /* SYSTEM NOTIFICATION */
+        /* DYNAMIC SYSTEM NOTIFICATION */
         #custom-toast {
             position: fixed;
             top: 20px;
             right: 20px;
-            background: #1e293b;
-            color: var(--color-legendary);
-            border: 1px solid var(--color-legendary);
             padding: 12px 20px;
             border-radius: 4px;
             font-size: 12px;
@@ -98,8 +96,9 @@
             font-weight: bold;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
             transform: translateX(250%);
-            transition: transform 0.4s ease-in-out;
+            transition: transform 0.4s ease-in-out, background 0.3s, color 0.3s;
             z-index: 9999;
+            border: 1px solid transparent;
         }
 
         #custom-toast.show { transform: translateX(0); }
@@ -107,7 +106,7 @@
 </head>
 <body>
 
-    <div id="custom-toast">SYSTEM: CLASSIFIED ASSET DEPLOYED</div>
+    <div id="custom-toast">SYSTEM MESSAGE</div>
 
     <h1 style="margin-top:30px; font-weight: 300; letter-spacing: 1px;">Archive Directory</h1>
 
@@ -144,6 +143,7 @@
     </div>
 
     <script>
+        // 3D TILT ENGINE
         const cards = document.querySelectorAll('.game-card');
         cards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
@@ -159,21 +159,34 @@
             });
         });
 
+        // UNLOCK LOGIC
         function checkCode() {
             const code = document.getElementById('vaultCode').value;
             const toast = document.getElementById('custom-toast');
-            
+            const secret = document.getElementById('secretGame');
+
             if (code === "12345") {
-                const secret = document.getElementById('secretGame');
                 secret.classList.remove('locked');
-                toast.classList.add('show');
-                setTimeout(() => { toast.classList.remove('show'); }, 4000);
-                document.getElementById('vaultCode').value = "";
+                
+                // Set to Gold for Classified
+                toast.style.background = "#fbbf24"; 
+                toast.style.color = "#000000";
+                toast.style.borderColor = "#fbbf24";
+                toast.innerText = "Access Granted: Classified Card Unlocked";
+                
+                showToast();
             } else {
                 document.getElementById('vaultCode').value = "";
             }
         }
 
+        function showToast() {
+            const toast = document.getElementById('custom-toast');
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); }, 4000);
+        }
+
+        // PANIC KEY
         window.addEventListener('keydown', function(e) {
             if (e.key === "Escape") { window.location.replace("https://classroom.google.com"); }
         });
