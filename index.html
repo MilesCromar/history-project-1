@@ -20,12 +20,15 @@
             align-items: center; 
         }
 
-        .vault-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
-            gap: 30px; 
-            padding: 50px; 
-            perspective: 1000px; 
+        .vault-grid {
+    display: grid;
+    /* This forces exactly 4 columns. Change the 4 to a 3 if you want them bigger! */
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 30px;
+    padding: 50px;
+    width: 90%; /* Helps center the whole grid */
+    perspective: 1000px;
+}
         }
 
         .game-card {
