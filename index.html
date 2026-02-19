@@ -140,7 +140,7 @@
 
     <div id="lock-overlay" class="lock-overlay">
         <div class="keypad-window">
-            <div style="font-size: 10px; letter-spacing: 2px; margin-bottom: 15px; color: var(--restricted-red);">SECURITY TERMINAL</div>
+            <div style="font-size: 10px; letter-spacing: 2px; margin-bottom: 15px; color: var(--steam-blue);">SECURITY TERMINAL</div>
             <div id="display" class="display">____</div>
             <div class="keypad">
                 <div class="key" onclick="press(7)">7</div><div class="key" onclick="press(8)">8</div><div class="key" onclick="press(9)">9</div>
@@ -148,7 +148,7 @@
                 <div class="key" onclick="press(1)">1</div><div class="key" onclick="press(2)">2</div><div class="key" onclick="press(3)">3</div>
                 <div class="key" onclick="closeLock()" style="background: #600;">ESC</div>
                 <div class="key" onclick="press(0)">0</div>
-                <div class="key" onclick="inputCode=' '; updateDisplay()" style="font-size: 12px;">CLR</div>
+                <div class="key" onclick="inputCode=''; updateDisplay()" style="font-size: 12px;">CLR</div>
             </div>
         </div>
     </div>
@@ -159,7 +159,7 @@
             <div class="sidebar-item" onclick="document.querySelector('.main-view').scrollTo(0,0)">🏠 Home</div>
             <div class="sidebar-item" onclick="document.getElementById('recent').scrollIntoView()">🎮 Recent Games</div>
             <div class="sidebar-item" onclick="document.getElementById('all').scrollIntoView()">📚 All Games</div>
-            <div class="sidebar-item" onclick="openLock()" style="color: #ffbaba; border-left: 2px solid transparent;" id="classified-btn">📂 Classified Files</div>
+            <div class="sidebar-item" onclick="openLock()">📂 Classified Files</div>
             <div class="sidebar-item">⚙️ Settings</div>
         </div>
 
@@ -234,13 +234,10 @@
                 updateDisplay();
                 if (inputCode.length === 4) {
                     if (inputCode === targetCode) {
-                        // UNLOCK
                         document.getElementById('classified-section').style.display = 'block';
                         closeLock();
-                        // AUTO-SCROLL
                         document.getElementById('classified').scrollIntoView({ behavior: 'smooth' });
                     } else {
-                        // WRONG CODE SHAKE EFFECT (optional logic)
                         inputCode = "";
                         setTimeout(() => { updateDisplay(); }, 300);
                     }
