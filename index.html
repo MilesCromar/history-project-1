@@ -26,7 +26,7 @@
 
         .container { display: flex; width: 100%; height: 100%; }
 
-        /* SIDEBAR */
+        /* SIDEBAR (Steam Glass Style) */
         .sidebar {
             width: 260px;
             min-width: 260px;
@@ -49,9 +49,10 @@
         }
 
         .sidebar-item {
-            padding: 10px 20px;
+            padding: 12px 20px;
             font-size: 14px;
             color: var(--text-grey);
+            text-decoration: none;
             cursor: pointer;
             transition: 0.2s;
             display: flex;
@@ -63,13 +64,6 @@
             color: white;
         }
 
-        .sidebar-item.active {
-            color: white;
-            background: rgba(102, 192, 244, 0.1);
-            border-left: 3px solid var(--steam-blue);
-        }
-
-        /* User Profile at Bottom */
         .user-section {
             margin-top: auto;
             padding: 20px;
@@ -80,29 +74,27 @@
             font-size: 13px;
         }
 
-        .avatar {
-            width: 32px; height: 32px;
-            background: var(--steam-blue);
-            border-radius: 2px;
-        }
+        .avatar { width: 32px; height: 32px; background: var(--steam-blue); border-radius: 2px; }
 
         /* MAIN AREA */
         .main-view { flex-grow: 1; overflow-y: auto; scroll-behavior: smooth; }
 
+        /* LOGO HEADER */
         .hero-logo-area {
-            width: 100%; min-height: 50vh;
+            width: 100%; min-height: 55vh;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
 
         .main-logo {
-            font-size: 70px; font-weight: 900; margin: 0; text-transform: uppercase;
+            font-size: 75px; font-weight: 900; margin: 0; text-transform: uppercase;
             background: linear-gradient(to bottom, #ffffff, #66c0f4);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
         }
 
-        /* CONTENT */
-        .content-padding { padding: 40px; max-width: 1200px; margin: 0 auto; }
+        /* CONTENT SECTIONS */
+        .content-padding { padding: 40px; max-width: 1300px; margin: 0 auto; }
+        
         .section-header {
             font-size: 13px; color: var(--steam-blue); text-transform: uppercase;
             letter-spacing: 2px; margin-bottom: 25px; border-bottom: 1px solid rgba(102, 192, 244, 0.2);
@@ -110,10 +102,10 @@
         }
 
         .grid { display: grid; gap: 25px; margin-bottom: 60px; }
-        .quick-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+        .quick-grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
         .library-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
 
-        /* THE 3D TILT CARD */
+        /* GAME CARDS (With 3D Tilt) */
         .game-card {
             background: var(--steam-card); border-radius: 4px; position: relative;
             cursor: pointer; transition: transform 0.1s ease-out, box-shadow 0.3s ease;
@@ -136,7 +128,7 @@
         .card-overlay {
             position: absolute; bottom: 0; left: 0; right: 0;
             background: linear-gradient(transparent, rgba(0,0,0,0.9));
-            padding: 15px; font-weight: bold; transform: translateZ(20px);
+            padding: 15px; font-weight: bold; transform: translateZ(25px);
         }
     </style>
 </head>
@@ -145,11 +137,11 @@
     <div class="container">
         <div class="sidebar">
             <div class="sidebar-header">Library</div>
-            <div class="sidebar-item active">🏠 Home</div>
-            <div class="sidebar-item">🎮 Recent Games</div>
-            <div class="sidebar-item">📚 All Games</div>
-            <div class="sidebar-item">📂 Classified Files</div>
-            <div class="sidebar-item">⚙️ Settings</div>
+            <a href="#" class="sidebar-item" onclick="document.querySelector('.main-view').scrollTo(0,0)">🏠 Home</a>
+            <a href="#recent" class="sidebar-item">🎮 Recent Games</a>
+            <a href="#all" class="sidebar-item">📚 All Games</a>
+            <a href="#classified" class="sidebar-item">📂 Classified Files</a>
+            <a href="#settings" class="sidebar-item">⚙️ Settings</a>
 
             <div class="user-section">
                 <div class="avatar"></div>
@@ -158,62 +150,31 @@
         </div>
 
         <div class="main-view">
+            
             <div class="hero-logo-area">
                 <h1 class="main-logo">ARCHIVE</h1>
-                <div style="margin-top: 10px; color: var(--steam-blue); letter-spacing: 4px; font-size: 11px;">READY TO LAUNCH</div>
+                <div style="margin-top: 10px; color: var(--steam-blue); letter-spacing: 5px; font-size: 11px;">READY TO EXPLORE</div>
             </div>
 
             <div class="content-padding">
-                <div class="section-header">Quick Launch</div>
+                
+                <div id="recent" class="section-header">Recent Activity</div>
                 <div class="grid quick-grid">
                     <div class="game-card quick-card">
-                        <div class="card-img" style="background-image: url('https://via.placeholder.com/600x337/2a475e/ffffff?text=RECENT+1');"></div>
+                        <div class="card-img" style="background-image: url('https://via.placeholder.com/600x337/171a21/66c0f4?text=GAME+1');"></div>
                         <div class="card-overlay">Project Alpha</div>
                     </div>
                     <div class="game-card quick-card">
-                        <div class="card-img" style="background-image: url('https://via.placeholder.com/600x337/2a475e/ffffff?text=RECENT+2');"></div>
+                        <div class="card-img" style="background-image: url('https://via.placeholder.com/600x337/171a21/66c0f4?text=GAME+2');"></div>
                         <div class="card-overlay">Project Beta</div>
                     </div>
                 </div>
 
-                <div class="section-header">All Content</div>
+                <div id="all" class="section-header">All Collections</div>
                 <div class="grid library-grid">
                     <div class="game-card library-card">
-                        <div class="card-img" style="background-image: url('https://via.placeholder.com/300x450/1b2838/66c0f4?text=ASSET+1');"></div>
+                        <div class="card-img" style="background-image: url('https://via.placeholder.com/300x450/2a475e/ffffff?text=ASSET+1');"></div>
                         <div class="card-overlay">Asset 01</div>
                     </div>
                     <div class="game-card library-card">
-                        <div class="card-img" style="background-image: url('https://via.placeholder.com/300x450/1b2838/66c0f4?text=ASSET+2');"></div>
-                        <div class="card-overlay">Asset 02</div>
-                    </div>
-                    <div class="game-card library-card">
-                        <div class="card-img" style="background-image: url('https://via.placeholder.com/300x450/1b2838/66c0f4?text=ASSET+3');"></div>
-                        <div class="card-overlay">Asset 03</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const cards = document.querySelectorAll('.game-card');
-        cards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const rotateX = ((rect.height / 2) - y) / 10;
-                const rotateY = (x - (rect.width / 2)) / 10;
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
-            });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-            });
-        });
-
-        window.addEventListener('keydown', (e) => {
-            if (e.key === "Escape") { window.location.replace("https://classroom.google.com"); }
-        });
-    </script>
-</body>
-</html>
+                        <div class="card-img" style="background-image: url('https://via.placeholder.com/300x450/2a475e/ffffff?text=ASSET+2');"></div>
