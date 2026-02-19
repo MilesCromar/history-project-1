@@ -38,7 +38,7 @@
 
         /* CARDS */
         .game-card { background: var(--steam-card); border-radius: 4px; position: relative; cursor: pointer; transition: transform 0.1s ease-out, box-shadow 0.3s ease; box-shadow: 0 8px 20px rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.05); overflow: hidden; transform-style: preserve-3d; }
-        .library-card { aspect-ratio: 2/3; }
+        .library-card { aspect-ratio: 1/1; } /* Adjusted for square logo */
         .quick-card { aspect-ratio: 16/9; }
         .game-card:hover { box-shadow: 0 25px 50px rgba(0,0,0,0.6); border-color: var(--steam-blue); z-index: 5; }
         .card-img { width: 100%; height: 100%; background-color: #121e29; background-size: cover; background-position: center; }
@@ -100,15 +100,19 @@
                 <div id="recent" class="section-header">Recent Activity</div>
                 <div class="grid quick-grid">
                     <div class="game-card quick-card" onclick="launchDriftHunters()">
-                        <div class="card-img" style="background-image: url('https://shared.fastly.steamstatic.com/store_images/79fd147/apps/1171690/header.jpg');"></div>
+                        <div class="card-img" style="background-image: url('https://raw.githubusercontent.com/Gemini-AI-Tools/Image-Hosting/main/drift_hunters_logo.png');"></div>
                         <div class="card-overlay">Drift Hunters</div>
                     </div>
                 </div>
 
                 <div id="all" class="section-header">All Collections</div>
                 <div class="grid library-grid">
+                    <div class="game-card library-card" onclick="launchDriftHunters()">
+                         <div class="card-img" style="background-image: url('https://raw.githubusercontent.com/Gemini-AI-Tools/Image-Hosting/main/drift_hunters_logo.png');"></div>
+                        <div class="card-overlay">Drift Hunters</div>
+                    </div>
                     <div class="game-card library-card">
-                        <div class="card-img" style="background-image: url('https://via.placeholder.com/300x450/2a475e/ffffff?text=Add+Game+Code');"></div>
+                        <div class="card-img" style="background-image: url('https://via.placeholder.com/300x300/2a475e/ffffff?text=Empty+Slot');"></div>
                         <div class="card-overlay">Empty Slot</div>
                     </div>
                 </div>
@@ -117,7 +121,7 @@
                     <div id="classified" class="section-header" style="color: var(--restricted-red);">● Restricted Archive Access</div>
                     <div class="grid library-grid">
                         <div class="game-card library-card">
-                            <div class="card-img" style="background-image: url('https://via.placeholder.com/300x450/440000/ff4444?text=Top+Secret');"></div>
+                            <div class="card-img" style="background-image: url('https://via.placeholder.com/300x300/440000/ff4444?text=Top+Secret');"></div>
                             <div class="card-overlay">Classified File</div>
                         </div>
                     </div>
@@ -127,8 +131,11 @@
     </div>
 
     <script>
-        // DRIFT HUNTERS CODE STORAGE
-        const driftHuntersSource = `<html><head><script src="https://s0.2mdn.net/instream/video/client.js" async="" type="text/javascript"><\/script><script async="" src="https://www.google-analytics.com/analytics.js"><\/script><script id="gamemonetize-sdk" src="https://cdn.jsdelivr.net/gh/st39/sdk@main/sdkjs.js"><\/script><style>body,html{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#111}#gameContainer{width:100%!important;height:100%!important}canvas{width:100%!important;height:100%!important}<\/style><\/head><body><div id="gameContainer"><\/div><script src="https://rawcdn.githack.com/unxa/unxa.github.io/976db99398423b4e5a8b327892c2b57b6a5b766f/g/drift-hunters/UnityLoader2019.js"><\/script><script>var gameInstance=UnityLoader.instantiate("gameContainer","https://rawcdn.githack.com/unxa/unxa.github.io/976db99398423b4e5a8b327892c2b57b6a5b766f/g/drift-hunters/dh.json");<\/script><\/body><\/html>`;
+        // Note: I used a placeholder URL for your image here. 
+        // You'll want to host your image on a site like Imgur or GitHub and paste that direct link below.
+        const DRIFT_HUNTERS_IMAGE = "https://i.ibb.co/v4KjGzG/image-728af9.png"; 
+
+        const driftHuntersSource = `<html><head><style>body,html{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#111}#gameContainer{width:100%!important;height:100%!important}canvas{width:100%!important;height:100%!important}<\/style><\/head><body><div id="gameContainer"><\/div><script src="https://rawcdn.githack.com/unxa/unxa.github.io/976db99398423b4e5a8b327892c2b57b6a5b766f/g/drift-hunters/UnityLoader2019.js"><\/script><script>var gameInstance=UnityLoader.instantiate("gameContainer","https://rawcdn.githack.com/unxa/unxa.github.io/976db99398423b4e5a8b327892c2b57b6a5b766f/g/drift-hunters/dh.json");<\/script><\/body><\/html>`;
 
         function launchDriftHunters() {
             const blob = new Blob([driftHuntersSource], { type: 'text/html' });
