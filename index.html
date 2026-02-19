@@ -12,7 +12,6 @@
             --steam-blue: #66c0f4;
         }
 
-        /* Essential Reset */
         * { box-sizing: border-box; }
 
         html, body {
@@ -24,7 +23,7 @@
             background: radial-gradient(circle at top left, #2a475e 0%, #1b2838 100%);
             color: white;
             font-family: 'Segoe UI', Arial, sans-serif;
-            overflow: hidden; /* Stops double scrollbars */
+            overflow: hidden; 
         }
 
         .container {
@@ -126,8 +125,10 @@
             display: grid;
             gap: 25px;
             margin-bottom: 60px;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
         }
+
+        .quick-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+        .library-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
 
         /* THE 3D TILT CARD */
         .game-card {
@@ -135,7 +136,6 @@
             border-radius: 4px;
             position: relative;
             cursor: pointer;
-            aspect-ratio: 2/3;
             transition: transform 0.1s ease-out, box-shadow 0.3s ease;
             box-shadow: 0 8px 20px rgba(0,0,0,0.4);
             border: 1px solid rgba(255,255,255,0.05);
@@ -143,7 +143,8 @@
             transform-style: preserve-3d;
         }
 
-        .game-card.wide { aspect-ratio: 16/9; }
+        .library-card { aspect-ratio: 2/3; }
+        .quick-card { aspect-ratio: 16/9; }
 
         .game-card:hover {
             box-shadow: 0 25px 50px rgba(0,0,0,0.6);
@@ -186,30 +187,31 @@
             </div>
 
             <div class="content-padding">
+                
                 <div class="section-header">Quick Launch</div>
-                <div class="grid">
-                    <div class="game-card wide">
+                <div class="grid quick-grid">
+                    <div class="game-card quick-card">
                         <div class="card-img" style="background-image: url('https://via.placeholder.com/600x337/2a475e/ffffff?text=RECENT+1');"></div>
                         <div class="card-overlay">Project Alpha</div>
                     </div>
-                    <div class="game-card wide">
+                    <div class="game-card quick-card">
                         <div class="card-img" style="background-image: url('https://via.placeholder.com/600x337/2a475e/ffffff?text=RECENT+2');"></div>
                         <div class="card-overlay">Project Beta</div>
                     </div>
                 </div>
 
                 <div class="section-header">All Content</div>
-                <div class="grid">
-                    <div class="game-card">
-                        <div class="card-img"></div>
+                <div class="grid library-grid">
+                    <div class="game-card library-card">
+                        <div class="card-img" style="background-image: url('https://via.placeholder.com/300x450/1b2838/66c0f4?text=ASSET+1');"></div>
                         <div class="card-overlay">Asset 01</div>
                     </div>
-                    <div class="game-card">
-                        <div class="card-img"></div>
+                    <div class="game-card library-card">
+                        <div class="card-img" style="background-image: url('https://via.placeholder.com/300x450/1b2838/66c0f4?text=ASSET+2');"></div>
                         <div class="card-overlay">Asset 02</div>
                     </div>
-                    <div class="game-card">
-                        <div class="card-img"></div>
+                    <div class="game-card library-card">
+                        <div class="card-img" style="background-image: url('https://via.placeholder.com/300x450/1b2838/66c0f4?text=ASSET+3');"></div>
                         <div class="card-overlay">Asset 03</div>
                     </div>
                 </div>
