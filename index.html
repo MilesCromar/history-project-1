@@ -28,26 +28,21 @@
 
         /* SIDEBAR */
         .sidebar {
-            width: 260px;
-            min-width: 260px;
+            width: 260px; min-width: 260px;
             background: var(--sidebar-bg);
             border-right: 1px solid rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            display: flex; flex-direction: column;
-            z-index: 10;
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            display: flex; flex-direction: column; z-index: 10;
         }
 
         .sidebar-header {
-            padding: 30px 20px 10px;
-            font-size: 11px; font-weight: bold;
+            padding: 30px 20px 10px; font-size: 11px; font-weight: bold;
             text-transform: uppercase; letter-spacing: 1px;
         }
 
         .sidebar-item {
-            padding: 12px 20px; font-size: 14px;
-            color: var(--text-grey); text-decoration: none;
-            transition: 0.2s; display: flex; align-items: center;
+            padding: 12px 20px; font-size: 14px; color: var(--text-grey);
+            text-decoration: none; cursor: pointer; transition: 0.2s;
         }
 
         .sidebar-item:hover { background: rgba(255, 255, 255, 0.05); color: white; }
@@ -88,8 +83,8 @@
             overflow: hidden; transform-style: preserve-3d;
         }
 
-        .library-card { aspect-ratio: 2/3; height: 100%; width: 100%; }
-        .quick-card { aspect-ratio: 16/9; height: 100%; width: 100%; }
+        .library-card { aspect-ratio: 2/3; }
+        .quick-card { aspect-ratio: 16/9; }
 
         .game-card:hover {
             box-shadow: 0 25px 50px rgba(0,0,0,0.6); border-color: var(--steam-blue); z-index: 5;
@@ -105,9 +100,43 @@
             background: linear-gradient(transparent, rgba(0,0,0,0.9));
             padding: 15px; font-weight: bold; transform: translateZ(25px);
         }
+
+        /* CLASSIFIED LOCK SYSTEM */
+        #classified-section { display: none; } /* Hidden by default */
+
+        .lock-screen {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); backdrop-filter: blur(20px);
+            z-index: 1000; justify-content: center; align-items: center; flex-direction: column;
+        }
+
+        .keypad { display: grid; grid-template-columns: repeat(3, 70px); gap: 15px; margin-top: 20px; }
+        .key {
+            width: 70px; height: 70px; background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 20px; cursor: pointer; transition: 0.2s;
+        }
+        .key:hover { background: var(--steam-blue); color: black; }
+        .display {
+            font-size: 30px; letter-spacing: 15px; margin-bottom: 20px;
+            height: 40px; color: var(--steam-blue);
+        }
     </style>
 </head>
 <body>
+
+    <div id="lock-screen" class="lock-screen">
+        <div style="font-size: 12px; letter-spacing: 3px; margin-bottom: 10px;">ENCRYPTED ACCESS</div>
+        <div id="display" class="display">____</div>
+        <div class="keypad">
+            <div class="key" onclick="press(7)">7</div><div class="key" onclick="press(8)">8</div><div class="key" onclick="press(9)">9</div>
+            <div class="key" onclick="press(4)">4</div><div class="key" onclick="press(5)">5</div><div class="key" onclick="press(6)">6</div>
+            <div class="key" onclick="press(1)">1</div><div class="key" onclick="press(2)">2</div><div class="key" onclick="press(3)">3</div>
+            <div></div><div class="key" onclick="press(0)">0</div>
+            <div class="key" onclick="closeLock()" style="font-size: 12px; background: #900;">X</div>
+        </div>
+    </div>
 
     <div class="container">
         <div class="sidebar">
@@ -115,7 +144,7 @@
             <a href="#" class="sidebar-item">🏠 Home</a>
             <a href="#recent" class="sidebar-item">🎮 Recent Games</a>
             <a href="#all" class="sidebar-item">📚 All Games</a>
-            <a href="#classified" class="sidebar-item">📂 Classified Files</a>
+            <div class="sidebar-item" onclick="openLock()">📂 Classified Files</div>
             <a href="#settings" class="sidebar-item">⚙️ Settings</a>
         </div>
 
@@ -132,10 +161,6 @@
                         <div class="card-img" style="background-image: url('https://via.placeholder.com/600x337/171a21/66c0f4?text=WIDE+CARD');"></div>
                         <div class="card-overlay">Project Alpha</div>
                     </div>
-                    <div class="game-card quick-card">
-                        <div class="card-img" style="background-image: url('https://via.placeholder.com/600x337/171a21/66c0f4?text=WIDE+CARD');"></div>
-                        <div class="card-overlay">Project Beta</div>
-                    </div>
                 </div>
 
                 <div id="all" class="section-header">All Collections</div>
@@ -144,9 +169,15 @@
                         <div class="card-img" style="background-image: url('https://via.placeholder.com/300x450/2a475e/ffffff?text=TALL+CARD');"></div>
                         <div class="card-overlay">Asset 01</div>
                     </div>
-                    <div class="game-card library-card">
-                        <div class="card-img" style="background-image: url('https://via.placeholder.com/300x450/2a475e/ffffff?text=TALL+CARD');"></div>
-                        <div class="card-overlay">Asset 02</div>
+                </div>
+
+                <div id="classified-section">
+                    <div id="classified" class="section-header" style="color: #ff4444;">Restricted Content</div>
+                    <div class="grid library-grid">
+                        <div class="game-card library-card">
+                            <div class="card-img" style="background-image: url('https://via.placeholder.com/300x450/440000/ffffff?text=TOP+SECRET');"></div>
+                            <div class="card-overlay">Classified 01</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -154,28 +185,58 @@
     </div>
 
     <script>
+        // TILT SCRIPT (Kept exactly as you liked)
         const cards = document.querySelectorAll('.game-card');
-
         cards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
-
-                // FIX: Tall cards (library-card) stay snappy (intensity 10)
-                // Wide cards (quick-card) get a higher intensity (30) so they TILT LESS
                 let stabilizer = card.classList.contains('quick-card') ? 30 : 10;
-
                 const rotateX = ((rect.height / 2) - y) / stabilizer;
                 const rotateY = (x - (rect.width / 2)) / stabilizer;
-                
                 card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
             });
-
             card.addEventListener('mouseleave', () => {
                 card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
             });
         });
+
+        // LOCK SYSTEM SCRIPT
+        let inputCode = "";
+        const targetCode = "7410";
+
+        function openLock() { document.getElementById('lock-screen').style.display = 'flex'; }
+        function closeLock() { 
+            document.getElementById('lock-screen').style.display = 'none'; 
+            inputCode = ""; 
+            updateDisplay();
+        }
+
+        function press(num) {
+            if (inputCode.length < 4) {
+                inputCode += num;
+                updateDisplay();
+                if (inputCode.length === 4) {
+                    if (inputCode === targetCode) {
+                        document.getElementById('classified-section').style.display = 'block';
+                        closeLock();
+                        window.location.hash = "classified";
+                    } else {
+                        inputCode = "";
+                        setTimeout(() => { updateDisplay(); }, 500);
+                    }
+                }
+            }
+        }
+
+        function updateDisplay() {
+            let dots = "";
+            for (let i = 0; i < 4; i++) {
+                dots += inputCode[i] ? "*" : "_";
+            }
+            document.getElementById('display').innerText = dots;
+        }
 
         window.addEventListener('keydown', (e) => {
             if (e.key === "Escape") { window.location.replace("https://classroom.google.com"); }
