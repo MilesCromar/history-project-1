@@ -4,155 +4,195 @@
     <title>Archive Library</title>
     <style>
         :root {
-            --sidebar-width: 260px;
-            --bg-dark: #0f172a;
-            --card-bg: #1e293b;
-            --accent-blue: #3b82f6;
+            --sidebar-bg: #171a21;
+            --main-bg: #1b2838;
+            --card-bg: #2a475e;
+            --steam-blue: #66c0f4;
+            --text-grey: #c6d4df;
         }
 
         body { 
-            background: var(--bg-dark); 
+            background: var(--main-bg); 
             color: white; 
-            font-family: 'Segoe UI', sans-serif; 
+            font-family: 'Motiva Sans', Sans-serif, 'Segoe UI'; 
             margin: 0; 
             display: flex;
             height: 100vh;
             overflow: hidden;
         }
 
-        /* SIDEBAR LIST */
+        /* STEAM SIDEBAR */
         .sidebar {
-            width: var(--sidebar-width);
-            background: #0b1120;
-            border-right: 1px solid #1e293b;
+            width: 260px;
+            background: var(--sidebar-bg);
             display: flex;
             flex-direction: column;
-            padding: 20px 0;
+            border-right: 1px solid #000;
         }
 
-        .sidebar-header { padding: 0 20px 20px; font-size: 14px; color: #64748b; letter-spacing: 1px; }
-        
+        .sidebar-header {
+            padding: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            color: var(--text-grey);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sidebar-list {
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
         .sidebar-item {
-            padding: 10px 20px;
-            font-size: 13px;
+            padding: 8px 20px;
+            font-size: 14px;
+            color: #8f98a0;
             cursor: pointer;
-            transition: 0.2s;
-            color: #94a3b8;
-            border-left: 3px solid transparent;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .sidebar-item:hover { background: #1e293b; color: white; border-left-color: var(--accent-blue); }
+        .sidebar-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
 
         /* MAIN CONTENT AREA */
         .main-view {
             flex-grow: 1;
             overflow-y: auto;
-            background: linear-gradient(to bottom, #1e293b 0%, #0f172a 300px);
+            padding: 40px;
+            background: radial-gradient(circle at top left, rgba(42, 71, 94, 0.3) 0%, rgba(27, 40, 56, 1) 100%);
         }
 
-        .hero-banner {
-            height: 250px;
-            padding: 60px;
-            background: linear-gradient(to right, rgba(15, 23, 42, 0.9), transparent), url('https://via.placeholder.com/1200x400');
-            background-size: cover;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+        .section-title {
+            font-size: 14px;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 10px;
         }
-
-        .hero-banner h1 { font-size: 48px; margin: 0; letter-spacing: -1px; }
 
         .content-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 25px;
-            padding: 40px;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
         }
 
         /* THE STEAM POSTER CARD */
+        .poster-wrapper {
+            perspective: 1000px;
+        }
+
         .poster-card {
-            aspect-ratio: 2/3;
+            aspect-ratio: 2 / 3;
             background: var(--card-bg);
             border-radius: 4px;
             position: relative;
             cursor: pointer;
-            transition: transform 0.2s ease-out;
-            transform-style: preserve-3d;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-            overflow: hidden;
-        }
-
-        .poster-art {
-            width: 100%;
-            height: 100%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
             background-size: cover;
             background-position: center;
+            
+            /* Smooth lift transition */
+            transition: transform 0.3s cubic-bezier(0.2, 0, 0.2, 1), box-shadow 0.3s ease;
+            transform-style: preserve-3d;
+            border: 1px solid rgba(255,255,255,0);
         }
 
-        .poster-info {
+        .poster-card:hover {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            border: 1px solid var(--steam-blue);
+            z-index: 10;
+        }
+
+        .poster-label {
             position: absolute;
             bottom: 0;
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(transparent, rgba(0,0,0,0.9));
-            box-sizing: border-box;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.85));
+            padding: 10px;
+            font-size: 13px;
+            font-weight: 500;
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
         }
 
-        .poster-info span { font-weight: bold; font-size: 14px; }
     </style>
 </head>
 <body>
 
     <div class="sidebar">
-        <div class="sidebar-header">ALL ASSETS</div>
-        <div class="sidebar-item">Archive Document 01</div>
-        <div class="sidebar-item">History Project Final</div>
-        <div class="sidebar-item">Restricted Data Log</div>
-        <div class="sidebar-item">Asset_4492_V3</div>
-        <div class="sidebar-item">System_Override.exe</div>
+        <div class="sidebar-header">Library Home</div>
+        <div class="sidebar-list">
+            <div class="sidebar-item">Archive Project 01</div>
+            <div class="sidebar-item">Classified Docs</div>
+            <div class="sidebar-item">History Asset V2</div>
+            <div class="sidebar-item">Logic Core</div>
+            <div class="sidebar-item">System Log</div>
+            <div class="sidebar-item">Vault Index</div>
+        </div>
     </div>
 
     <div class="main-view">
-        <div class="hero-banner">
-            <span style="color: var(--accent-blue); font-weight: bold; letter-spacing: 2px;">FEATURED CONTENT</span>
-            <h1>The Archive Library</h1>
-        </div>
+        <div class="section-title">All Items</div>
 
         <div class="content-grid">
-            <div class="poster-card" style="background-image: url('https://via.placeholder.com/400x600/3b82f6/ffffff?text=PROJECT+A');">
-                <div class="poster-info"><span>Project Alpha</span></div>
+            <div class="poster-wrapper">
+                <div class="poster-card" style="background-image: url('https://via.placeholder.com/300x450/2a475e/ffffff?text=ASSET+01');">
+                    <div class="poster-label">Archive Project 01</div>
+                </div>
             </div>
 
-            <div class="poster-card" style="background-image: url('https://via.placeholder.com/400x600/fbbf24/000000?text=PROJECT+B');">
-                <div class="poster-info"><span>Project Beta</span></div>
+            <div class="poster-wrapper">
+                <div class="poster-card" style="background-image: url('https://via.placeholder.com/300x450/2a475e/ffffff?text=ASSET+02');">
+                    <div class="poster-label">Classified Docs</div>
+                </div>
             </div>
 
-            <div class="poster-card" style="background-image: url('https://via.placeholder.com/400x600/ef4444/ffffff?text=PROJECT+C');">
-                <div class="poster-info"><span>Project Gamma</span></div>
+            <div class="poster-wrapper">
+                <div class="poster-card" style="background-image: url('https://via.placeholder.com/300x450/2a475e/ffffff?text=ASSET+03');">
+                    <div class="poster-label">History Asset V2</div>
+                </div>
             </div>
 
-            <div class="poster-card" style="background-image: url('https://via.placeholder.com/400x600/10b981/ffffff?text=PROJECT+D');">
-                <div class="poster-info"><span>Project Delta</span></div>
+            <div class="poster-wrapper">
+                <div class="poster-card" style="background-image: url('https://via.placeholder.com/300x450/2a475e/ffffff?text=ASSET+04');">
+                    <div class="poster-label">Logic Core</div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // 3D TILT ENGINE FOR ALL POSTERS
-        const posters = document.querySelectorAll('.poster-card');
-        posters.forEach(card => {
+        const cards = document.querySelectorAll('.poster-card');
+
+        cards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
-                const rotateX = ( (rect.height / 2) - (e.clientY - rect.top)) / 10; 
-                const rotateY = ((e.clientX - rect.left) - (rect.width / 2)) / 10;
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Calculate rotation based on mouse position
+                const rotateX = ((rect.height / 2) - y) / 10;
+                const rotateY = (x - (rect.width / 2)) / 10;
+                
+                // Add "scale(1.1)" for the smooth lift effect
+                card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.1)`;
             });
+
             card.addEventListener('mouseleave', () => {
-                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)`;
+                // Return to normal shape smoothly
+                card.style.transform = `rotateX(0deg) rotateY(0deg) scale(1)`;
             });
         });
 
-        // PANIC KEY
+        // Panic Key (Esc)
         window.addEventListener('keydown', (e) => {
             if (e.key === "Escape") { window.location.replace("https://classroom.google.com"); }
         });
