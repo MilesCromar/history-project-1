@@ -192,4 +192,51 @@
                         <div class="card-img" style="background-image: url('https://via.placeholder.com/600x337/2a475e/ffffff?text=RECENT+1');"></div>
                         <div class="card-overlay">Project Alpha</div>
                     </div>
-                    <div class="game-card 
+                    <div class="game-card wide">
+                        <div class="card-img" style="background-image: url('https://via.placeholder.com/600x337/2a475e/ffffff?text=RECENT+2');"></div>
+                        <div class="card-overlay">Project Beta</div>
+                    </div>
+                </div>
+
+                <div class="section-header">All Content</div>
+                <div class="grid">
+                    <div class="game-card">
+                        <div class="card-img"></div>
+                        <div class="card-overlay">Asset 01</div>
+                    </div>
+                    <div class="game-card">
+                        <div class="card-img"></div>
+                        <div class="card-overlay">Asset 02</div>
+                    </div>
+                    <div class="game-card">
+                        <div class="card-img"></div>
+                        <div class="card-overlay">Asset 03</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const cards = document.querySelectorAll('.game-card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const rotateX = ((rect.height / 2) - y) / 10;
+                const rotateY = (x - (rect.width / 2)) / 10;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+            });
+        });
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === "Escape") { window.location.replace("https://classroom.google.com"); }
+        });
+    </script>
+</body>
+</html>
