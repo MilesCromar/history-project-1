@@ -21,7 +21,7 @@
         /* SIDEBAR */
         .sidebar { width: 260px; min-width: 260px; background: var(--sidebar-bg); border-right: 1px solid rgba(0, 0, 0, 0.4); backdrop-filter: blur(15px); display: flex; flex-direction: column; z-index: 10; }
         .sidebar-header { padding: 30px 20px 10px; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
-        .sidebar-item { padding: 12px 20px; font-size: 14px; color: var(--text-grey); cursor: pointer; transition: 0.2s; }
+        .sidebar-item { padding: 12px 20px; font-size: 14px; color: var(--text-grey); cursor: pointer; transition: 0.2s; text-decoration: none; }
         .sidebar-item:hover { background: rgba(255, 255, 255, 0.05); color: white; }
 
         /* MAIN VIEW */
@@ -44,15 +44,15 @@
         .card-img { width: 100%; height: 100%; background-color: #121e29; background-size: cover; background-position: center; }
         .card-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.9)); padding: 15px; font-weight: bold; transform: translateZ(25px); }
 
-        /* GAME PLAYER (STEALTH MODE) */
-        #game-container { display: none; position: fixed; top: 0; left: 260px; right: 0; bottom: 0; background: black; z-index: 20; }
+        /* STEALTH PLAYER */
+        #game-container { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: black; z-index: 100; }
         #game-frame { width: 100%; height: 100%; border: none; }
-        .close-game { position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.1); color: white; border: none; padding: 5px 15px; cursor: pointer; border-radius: 4px; z-index: 21; }
-        .close-game:hover { background: #900; }
+        .close-btn { position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.2); color: white; border: 1px solid white; padding: 5px 15px; cursor: pointer; z-index: 101; font-size: 12px; }
+        .close-btn:hover { background: #900; }
 
-        /* LOCK SCREEN */
+        /* KEYPAD WINDOW */
         .lock-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 1000; justify-content: center; align-items: center; }
-        .keypad-window { background: #171a21; border: 1px solid var(--steam-blue); padding: 30px; border-radius: 8px; width: 300px; display: flex; flex-direction: column; align-items: center; box-shadow: 0 0 30px rgba(102, 192, 244, 0.3); }
+        .keypad-window { background: #171a21; border: 1px solid var(--steam-blue); padding: 30px; border-radius: 8px; width: 300px; display: flex; flex-direction: column; align-items: center; }
         .keypad { display: grid; grid-template-columns: repeat(3, 60px); gap: 10px; margin-top: 20px; }
         .key { width: 60px; height: 60px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; display: flex; justify-content: center; align-items: center; font-size: 18px; cursor: pointer; }
         .key:hover { background: var(--steam-blue); color: black; }
@@ -63,13 +63,13 @@
 <body>
 
     <div id="game-container">
-        <button class="close-game" onclick="closeGame()">CLOSE [X]</button>
-        <iframe id="game-frame" src=""></iframe>
+        <button class="close-btn" onclick="closeGame()">CLOSE [X]</button>
+        <iframe id="game-frame"></iframe>
     </div>
 
     <div id="lock-overlay" class="lock-overlay">
         <div class="keypad-window">
-            <div style="font-size: 10px; color: var(--steam-blue);">SECURITY TERMINAL</div>
+            <div style="font-size: 10px; color: var(--steam-blue); letter-spacing: 2px;">SECURITY TERMINAL</div>
             <div id="display" class="display">____</div>
             <div class="keypad">
                 <div class="key" onclick="press(7)">7</div><div class="key" onclick="press(8)">8</div><div class="key" onclick="press(9)">9</div>
@@ -99,26 +99,26 @@
             <div class="content-padding">
                 <div id="recent" class="section-header">Recent Activity</div>
                 <div class="grid quick-grid">
-                    <div class="game-card quick-card" onclick="playGame('https://slowroads.io/')">
-                        <div class="card-img" style="background-image: url('https://via.placeholder.com/600x337/171a21/66c0f4?text=SLOW+ROADS');"></div>
-                        <div class="card-overlay">Slow Roads</div>
+                    <div class="game-card quick-card" onclick="launchDriftHunters()">
+                        <div class="card-img" style="background-image: url('https://shared.fastly.steamstatic.com/store_images/79fd147/apps/1171690/header.jpg');"></div>
+                        <div class="card-overlay">Drift Hunters</div>
                     </div>
                 </div>
 
                 <div id="all" class="section-header">All Collections</div>
                 <div class="grid library-grid">
-                    <div class="game-card library-card" onclick="playGame('https://poki.com/en/g/drive-mad')">
-                        <div class="card-img" style="background-image: url('https://via.placeholder.com/300x450/2a475e/ffffff?text=DRIVE+MAD');"></div>
-                        <div class="card-overlay">Drive Mad</div>
+                    <div class="game-card library-card">
+                        <div class="card-img" style="background-image: url('https://via.placeholder.com/300x450/2a475e/ffffff?text=Add+Game+Code');"></div>
+                        <div class="card-overlay">Empty Slot</div>
                     </div>
                 </div>
 
                 <div id="classified-section">
                     <div id="classified" class="section-header" style="color: var(--restricted-red);">● Restricted Archive Access</div>
                     <div class="grid library-grid">
-                        <div class="game-card library-card" onclick="playGame('https://classic.minecraft.net/')">
-                            <div class="card-img" style="background-image: url('https://via.placeholder.com/300x450/440000/ff4444?text=MINECRAFT');"></div>
-                            <div class="card-overlay">Minecraft Classic</div>
+                        <div class="game-card library-card">
+                            <div class="card-img" style="background-image: url('https://via.placeholder.com/300x450/440000/ff4444?text=Top+Secret');"></div>
+                            <div class="card-overlay">Classified File</div>
                         </div>
                     </div>
                 </div>
@@ -127,7 +127,24 @@
     </div>
 
     <script>
-        // TILT SCRIPT 
+        // DRIFT HUNTERS CODE STORAGE
+        const driftHuntersSource = `<html><head><script src="https://s0.2mdn.net/instream/video/client.js" async="" type="text/javascript"><\/script><script async="" src="https://www.google-analytics.com/analytics.js"><\/script><script id="gamemonetize-sdk" src="https://cdn.jsdelivr.net/gh/st39/sdk@main/sdkjs.js"><\/script><style>body,html{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#111}#gameContainer{width:100%!important;height:100%!important}canvas{width:100%!important;height:100%!important}<\/style><\/head><body><div id="gameContainer"><\/div><script src="https://rawcdn.githack.com/unxa/unxa.github.io/976db99398423b4e5a8b327892c2b57b6a5b766f/g/drift-hunters/UnityLoader2019.js"><\/script><script>var gameInstance=UnityLoader.instantiate("gameContainer","https://rawcdn.githack.com/unxa/unxa.github.io/976db99398423b4e5a8b327892c2b57b6a5b766f/g/drift-hunters/dh.json");<\/script><\/body><\/html>`;
+
+        function launchDriftHunters() {
+            const blob = new Blob([driftHuntersSource], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const frame = document.getElementById('game-frame');
+            frame.src = url;
+            document.getElementById('game-container').style.display = 'block';
+        }
+
+        function closeGame() {
+            const frame = document.getElementById('game-frame');
+            frame.src = '';
+            document.getElementById('game-container').style.display = 'none';
+        }
+
+        // TILT EFFECT
         const cards = document.querySelectorAll('.game-card');
         cards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
@@ -144,22 +161,7 @@
             });
         });
 
-        // STEALTH GAME PLAYER LOGIC
-        function playGame(url) {
-            const container = document.getElementById('game-container');
-            const frame = document.getElementById('game-frame');
-            frame.src = url;
-            container.style.display = 'block';
-        }
-
-        function closeGame() {
-            const container = document.getElementById('game-container');
-            const frame = document.getElementById('game-frame');
-            frame.src = '';
-            container.style.display = 'none';
-        }
-
-        // LOCK LOGIC
+        // LOCK SYSTEM
         let inputCode = "";
         const targetCode = "7410";
         function openLock() { document.getElementById('lock-overlay').style.display = 'flex'; }
@@ -173,19 +175,18 @@
                         document.getElementById('classified-section').style.display = 'block';
                         closeLock();
                         document.getElementById('classified').scrollIntoView({ behavior: 'smooth' });
-                    } else { inputCode = ""; setTimeout(() => { updateDisplay(); }, 300); }
+                    } else { inputCode = ""; setTimeout(updateDisplay, 300); }
                 }
             }
         }
         function updateDisplay() {
-            let dots = "";
-            for (let i = 0; i < 4; i++) { dots += inputCode[i] ? "*" : "_"; }
-            document.getElementById('display').innerText = dots;
+            let d = ""; for(let i=0; i<4; i++) d += inputCode[i] ? "*" : "_";
+            document.getElementById('display').innerText = d;
         }
 
         window.addEventListener('keydown', (e) => {
             if (e.key === "Escape") { 
-                closeGame(); // Close game first if open
+                if(document.getElementById('game-container').style.display === 'block') closeGame();
                 window.location.replace("https://classroom.google.com"); 
             }
         });
