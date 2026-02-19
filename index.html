@@ -3,208 +3,73 @@
 <head>
     <title>Archive Library</title>
     <style>
-        :root {
-            --sidebar-bg: rgba(23, 26, 33, 0.8); 
-            --main-bg: #1b2838;
-            --card-bg: #2a475e;
-            --steam-blue: #66c0f4;
-            --text-grey: #c6d4df;
-        }
-
         body { 
-            background: var(--main-bg); 
-            background: radial-gradient(circle at top left, #2a475e 0%, #1b2838 80%);
+            background: #1b2838; 
             color: white; 
-            font-family: 'Motiva Sans', Sans-serif, 'Segoe UI'; 
+            font-family: sans-serif; 
             margin: 0; 
             display: flex;
             height: 100vh;
-            overflow: hidden;
         }
 
-        /* STEAM BLURRED SIDEBAR */
+        /* Simplified Sidebar */
         .sidebar {
             width: 260px;
-            background: var(--sidebar-bg);
+            background: #171a21;
+            border-right: 1px solid #000;
             display: flex;
             flex-direction: column;
-            border-right: 1px solid rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(12px); 
-            -webkit-backdrop-filter: blur(12px);
-            z-index: 100;
         }
 
-        .sidebar-header {
-            padding: 25px 20px 10px;
-            font-size: 12px;
-            font-weight: bold;
-            color: white;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .sidebar-list {
-            overflow-y: auto;
-            flex-grow: 1;
-        }
-
-        .sidebar-item {
-            padding: 8px 20px;
-            font-size: 14px;
-            color: #8f98a0;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .sidebar-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-            color: white;
-        }
-
-        /* MAIN CONTENT AREA */
         .main-view {
             flex-grow: 1;
-            overflow-y: auto;
             padding: 40px;
-        }
-
-        .section-title {
-            font-size: 14px;
-            color: var(--steam-blue);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-        }
-
-        .section-title::after {
-            content: "";
-            flex-grow: 1;
-            height: 1px;
-            background: rgba(102, 192, 244, 0.2);
-            margin-left: 15px;
+            overflow-y: auto;
         }
 
         .content-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
         }
 
-        /* POSTER CARD (Vertical) */
         .poster-card {
-            aspect-ratio: 2 / 3;
-            background: var(--card-bg);
+            aspect-ratio: 2/3;
+            background: #2a475e;
             border-radius: 4px;
             position: relative;
-            cursor: pointer;
-            box-shadow: 0 8px 15px rgba(0,0,0,0.4);
-            background-size: cover;
-            background-position: center;
-            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
-            transform-style: preserve-3d;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-
-        /* WIDE CARD (Horizontal) */
-        .wide-card {
-            aspect-ratio: 16 / 9;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.2s;
         }
 
         .poster-card:hover {
-            box-shadow: 0 25px 50px rgba(0,0,0,0.7);
-            border: 1px solid var(--steam-blue);
-            z-index: 50;
+            transform: scale(1.05);
+            border-color: #66c0f4;
         }
 
-        .poster-label {
+        .label {
             position: absolute;
-            bottom: 0; left: 0; right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.9));
-            padding: 15px 10px 10px;
-            font-size: 13px;
+            bottom: 10px;
+            left: 10px;
+            font-size: 14px;
         }
-
     </style>
 </head>
 <body>
 
     <div class="sidebar">
-        <div class="sidebar-header">Home Library</div>
-        <div class="sidebar-list">
-            <div class="sidebar-item">Recent Downloads</div>
-            <div class="sidebar-item">History Project V1</div>
-            <div class="sidebar-item">Asset Archive</div>
-            <div class="sidebar-item">System Data</div>
-        </div>
+        <h3 style="padding: 20px;">LIBRARY</h3>
+        <div style="padding: 0 20px;">Recent</div>
     </div>
 
     <div class="main-view">
-        
-        <div style="margin-bottom: 40px;">
-            <div style="background: linear-gradient(rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%), url('https://via.placeholder.com/1200x400/1b2838/66c0f4?text=FEATURED+PROJECT'); 
-                        height: 350px; border-radius: 8px; background-size: cover; background-position: center; display: flex; align-items: flex-end; padding: 30px; border: 1px solid rgba(255,255,255,0.1);">
-                <div>
-                    <span style="background: #66c0f4; color: #1b2838; padding: 2px 8px; border-radius: 2px; font-size: 10px; font-weight: bold; letter-spacing: 1px;">JUST UPDATED</span>
-                    <h1 style="font-size: 36px; margin: 10px 0 5px 0; text-shadow: 2px 2px 10px rgba(0,0,0,0.5);">Major History Archive V3</h1>
-                    <p style="color: #c6d4df; margin: 0; font-size: 14px; max-width: 500px;">All assets have been migrated to the new Steam-style UI. Explore the collection below.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="section-title">Quick Launch</div>
-        <div class="content-grid" style="margin-bottom: 40px;">
-            <div class="poster-card wide-card" style="background-image: url('https://via.placeholder.com/400x225/2a475e/ffffff?text=RESUME');">
-                <div class="poster-label">View My Resume</div>
-            </div>
-            <div class="poster-card wide-card" style="background-image: url('https://via.placeholder.com/400x225/2a475e/ffffff?text=CONTACT');">
-                <div class="poster-label">Contact Directory</div>
-            </div>
-        </div>
-
-        <div class="section-title">All Content</div>
+        <h2 style="color: #66c0f4;">ALL CONTENT</h2>
         <div class="content-grid">
-            <div class="poster-card" style="background-image: url('https://via.placeholder.com/300x450/171a21/ffffff?text=FILE+01');">
-                <div class="poster-label">Archive Project 01</div>
-            </div>
-            <div class="poster-card" style="background-image: url('https://via.placeholder.com/300x450/171a21/ffffff?text=FILE+02');">
-                <div class="poster-label">Classified Docs</div>
-            </div>
-            <div class="poster-card" style="background-image: url('https://via.placeholder.com/300x450/171a21/ffffff?text=FILE+03');">
-                <div class="poster-label">History Asset V2</div>
-            </div>
-            <div class="poster-card" style="background-image: url('https://via.placeholder.com/300x450/171a21/ffffff?text=FILE+04');">
-                <div class="poster-label">Logic Core</div>
-            </div>
+            <div class="poster-card"><div class="label">Project 01</div></div>
+            <div class="poster-card"><div class="label">Project 02</div></div>
+            <div class="poster-card"><div class="label">Project 03</div></div>
         </div>
     </div>
 
-    <script>
-        // TILT AND LIFT EFFECT
-        const cards = document.querySelectorAll('.poster-card');
-
-        cards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                const rotateX = ((rect.height / 2) - y) / 12;
-                const rotateY = (x - (rect.width / 2)) / 12;
-                
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.08)`;
-            });
-
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)`;
-            });
-        });
-
-        // ESCAPE TO CLASSROOM
-        window.addEventListener('keydown', (e) => {
-            if (e.key === "Escape") { window.location.replace("https://classroom.google.com"); }
-        });
-    </script>
 </body>
 </html>
