@@ -1,188 +1,160 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Archive Directory</title>
+    <title>Archive Library</title>
     <style>
         :root {
-            --color-common: #94a3b8; 
-            --color-rare: #3b82f6;   
-            --color-legendary: #fbbf24; 
+            --sidebar-width: 260px;
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --accent-blue: #3b82f6;
         }
 
         body { 
-            background: #0f172a; 
+            background: var(--bg-dark); 
             color: white; 
             font-family: 'Segoe UI', sans-serif; 
             margin: 0; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            min-height: 100vh;
-        }
-
-        .vault-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, 220px); 
-            gap: 30px;
-            padding: 50px;
-            justify-content: center;
-            width: 100%;
-            perspective: 1000px;
-        }
-
-        .game-card {
-            width: 220px;
-            height: 320px;
-            background: #1e293b;
-            border-radius: 8px;
-            position: relative;
-            text-decoration: none;
-            color: white;
-            transition: all 0.2s ease-out;
-            transform-style: preserve-3d;
-            border: 1px solid #334155;
+            display: flex;
+            height: 100vh;
             overflow: hidden;
+        }
+
+        /* SIDEBAR LIST */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: #0b1120;
+            border-right: 1px solid #1e293b;
             display: flex;
             flex-direction: column;
+            padding: 20px 0;
         }
 
-        .common { border-color: var(--color-common); }
-        .common .rarity-text { color: var(--color-common); font-size: 10px; letter-spacing: 2px; }
+        .sidebar-header { padding: 0 20px 20px; font-size: 14px; color: #64748b; letter-spacing: 1px; }
+        
+        .sidebar-item {
+            padding: 10px 20px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #94a3b8;
+            border-left: 3px solid transparent;
+        }
 
-        .rare { border-color: var(--color-rare); }
-        .rare .rarity-text { color: var(--color-rare); font-size: 10px; letter-spacing: 2px; font-weight: bold; }
-        .rare:hover { box-shadow: 0 0 15px rgba(59, 130, 246, 0.2); }
+        .sidebar-item:hover { background: #1e293b; color: white; border-left-color: var(--accent-blue); }
 
-        .legendary { border-color: var(--color-legendary); }
-        .legendary .rarity-text { color: var(--color-legendary); font-size: 10px; letter-spacing: 2px; font-weight: bold; }
-        .legendary:hover { box-shadow: 0 0 20px rgba(251, 191, 36, 0.3); }
+        /* MAIN CONTENT AREA */
+        .main-view {
+            flex-grow: 1;
+            overflow-y: auto;
+            background: linear-gradient(to bottom, #1e293b 0%, #0f172a 300px);
+        }
 
-        .legendary::before {
-            content: "";
+        .hero-banner {
+            height: 250px;
+            padding: 60px;
+            background: linear-gradient(to right, rgba(15, 23, 42, 0.9), transparent), url('https://via.placeholder.com/1200x400');
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-banner h1 { font-size: 48px; margin: 0; letter-spacing: -1px; }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
+            padding: 40px;
+        }
+
+        /* THE STEAM POSTER CARD */
+        .poster-card {
+            aspect-ratio: 2/3;
+            background: var(--card-bg);
+            border-radius: 4px;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s ease-out;
+            transform-style: preserve-3d;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .poster-art {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .poster-info {
             position: absolute;
-            top: -100%; left: -100%; width: 300%; height: 300%;
-            background: linear-gradient(120deg, transparent 45%, rgba(255,255,255,0.15) 50%, transparent 55%);
-            transition: all 0.7s;
-            pointer-events: none;
-        }
-        .legendary:hover::before { top: -50%; left: -50%; }
-
-        .card-art { 
-            width: 100%; height: 240px; background-color: #000;
-            background-size: cover; background-position: center;
-            flex-shrink: 0; border-bottom: 1px solid #334155;
+            bottom: 0;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            box-sizing: border-box;
         }
 
-        .card-label { padding: 12px; background: #111827; flex-grow: 1; }
-        .locked { display: none; }
-
-        #custom-toast {
-            position: fixed; top: 20px; right: 20px;
-            padding: 12px 20px; border-radius: 4px;
-            font-size: 12px; letter-spacing: 1px; font-weight: bold;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.8);
-            transform: translateX(250%);
-            transition: transform 0.4s ease-in-out;
-            z-index: 9999;
-            border: 1px solid transparent;
-        }
-        #custom-toast.show { transform: translateX(0); }
+        .poster-info span { font-weight: bold; font-size: 14px; }
     </style>
 </head>
 <body>
 
-    <div id="custom-toast">SYSTEM MESSAGE</div>
-
-    <h1 style="margin-top:30px; font-weight: 300; letter-spacing: 1px;">Archive Directory</h1>
-
-    <div class="vault-grid">
-        <a href="#" class="game-card common">
-            <div class="card-art" style="background-image: url('https://via.placeholder.com/220x240/1e293b/475569?text=PUBLIC');"></div>
-            <div class="card-label">
-                <div class="rarity-text">STANDARD</div>
-                <div style="font-weight: 500; margin-top: 4px;">Public File 01</div>
-            </div>
-        </a>
-
-        <a href="#" id="standardUnlock" class="game-card common locked">
-            <div class="card-art" style="background-image: url('https://via.placeholder.com/220x240/1e293b/475569?text=STANDARD');"></div>
-            <div class="card-label">
-                <div class="rarity-text">STANDARD</div>
-                <div style="font-weight: 500; margin-top: 4px;">Level 1 Asset</div>
-            </div>
-        </a>
-
-        <a href="#" id="restrictedUnlock" class="game-card rare locked">
-            <div class="card-art" style="background-image: url('https://via.placeholder.com/220x240/1e293b/3b82f6?text=RESTRICTED');"></div>
-            <div class="card-label">
-                <div class="rarity-text">RESTRICTED</div>
-                <div style="font-weight: 500; margin-top: 4px;">Level 2 Asset</div>
-            </div>
-        </a>
-
-        <a href="#" id="classifiedUnlock" class="game-card legendary locked">
-            <div class="card-art" style="background-image: url('https://via.placeholder.com/220x240/1e293b/fbbf24?text=CLASSIFIED');"></div>
-            <div class="card-label">
-                <div class="rarity-text">CLASSIFIED</div>
-                <div style="font-weight: 500; margin-top: 4px;">Level 3 Asset</div>
-            </div>
-        </a>
+    <div class="sidebar">
+        <div class="sidebar-header">ALL ASSETS</div>
+        <div class="sidebar-item">Archive Document 01</div>
+        <div class="sidebar-item">History Project Final</div>
+        <div class="sidebar-item">Restricted Data Log</div>
+        <div class="sidebar-item">Asset_4492_V3</div>
+        <div class="sidebar-item">System_Override.exe</div>
     </div>
 
-    <div style="margin-top: 50px; margin-bottom: 50px; padding: 20px; border-top: 1px solid #1e293b; width: 80%; text-align: center;">
-        <input type="text" id="vaultCode" placeholder="Enter Numeric Key..." 
-            style="background: #0f172a; border: 1px solid #334155; color: white; padding: 10px 20px; border-radius: 4px; width: 300px; outline: none; font-family: monospace; text-align: center;">
-        <button onclick="checkCode()" style="background: #3b82f6; border: none; color: white; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-left: 10px;">Verify Asset</button>
+    <div class="main-view">
+        <div class="hero-banner">
+            <span style="color: var(--accent-blue); font-weight: bold; letter-spacing: 2px;">FEATURED CONTENT</span>
+            <h1>The Archive Library</h1>
+        </div>
+
+        <div class="content-grid">
+            <div class="poster-card" style="background-image: url('https://via.placeholder.com/400x600/3b82f6/ffffff?text=PROJECT+A');">
+                <div class="poster-info"><span>Project Alpha</span></div>
+            </div>
+
+            <div class="poster-card" style="background-image: url('https://via.placeholder.com/400x600/fbbf24/000000?text=PROJECT+B');">
+                <div class="poster-info"><span>Project Beta</span></div>
+            </div>
+
+            <div class="poster-card" style="background-image: url('https://via.placeholder.com/400x600/ef4444/ffffff?text=PROJECT+C');">
+                <div class="poster-info"><span>Project Gamma</span></div>
+            </div>
+
+            <div class="poster-card" style="background-image: url('https://via.placeholder.com/400x600/10b981/ffffff?text=PROJECT+D');">
+                <div class="poster-info"><span>Project Delta</span></div>
+            </div>
+        </div>
     </div>
 
     <script>
-        const cards = document.querySelectorAll('.game-card');
-        cards.forEach(card => {
+        // 3D TILT ENGINE FOR ALL POSTERS
+        const posters = document.querySelectorAll('.poster-card');
+        posters.forEach(card => {
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
-                const rotateX = ( (rect.height / 2) - (e.clientY - rect.top)) / 20; 
-                const rotateY = ((e.clientX - rect.left) - (rect.width / 2)) / 20;
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                const rotateX = ( (rect.height / 2) - (e.clientY - rect.top)) / 10; 
+                const rotateY = ((e.clientX - rect.left) - (rect.width / 2)) / 10;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
             });
             card.addEventListener('mouseleave', () => {
-                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)`;
             });
         });
 
-        function checkCode() {
-            const code = document.getElementById('vaultCode').value;
-            const toast = document.getElementById('custom-toast');
-            let message = ""; let bgColor = ""; let textColor = "#ffffff"; let targetCard = null;
-
-            if (code === "11111") {
-                targetCard = document.getElementById('standardUnlock');
-                message = "Access Granted: Standard Asset Unlocked";
-                bgColor = "#64748b";
-            } else if (code === "22222") {
-                targetCard = document.getElementById('restrictedUnlock');
-                message = "Access Granted: Restricted Asset Unlocked";
-                bgColor = "#3b82f6";
-            } else if (code === "33333") {
-                targetCard = document.getElementById('classifiedUnlock');
-                message = "Access Granted: Classified Asset Unlocked";
-                bgColor = "#fbbf24"; textColor = "#000000";
-            }
-
-            if (targetCard) {
-                targetCard.classList.remove('locked');
-                toast.innerText = message;
-                toast.style.background = bgColor;
-                toast.style.color = textColor;
-                toast.style.borderColor = bgColor;
-                toast.classList.add('show');
-                setTimeout(() => { toast.classList.remove('show'); }, 4000);
-            }
-            document.getElementById('vaultCode').value = "";
-        }
-
+        // PANIC KEY
         window.addEventListener('keydown', (e) => {
             if (e.key === "Escape") { window.location.replace("https://classroom.google.com"); }
-            if (e.key === "Enter") { checkCode(); }
         });
     </script>
 </body>
